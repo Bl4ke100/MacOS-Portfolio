@@ -62,16 +62,15 @@ const Dock = () => {
     }, []);
 
 
-    const toggleApp = (app) => {
+    const toggleApp = (app, rect) => {
         if (!app.canOpen) return;
 
         const window = windows[app.id];
         if (window.isOpen) {
             closeWindow(app.id);
         } else {
-            openWindow(app.id);
+            openWindow(app.id, rect); // Pass it to the store
         }
-
     }
 
     return (
@@ -87,7 +86,7 @@ const Dock = () => {
                             data-tooltip-content={name}
                             data-tooltip-delay-show={150}
                             disabled={!canOpen}
-                            onClick={() => toggleApp({ id, canOpen })}
+                            onClick={(e) => toggleApp({ id, canOpen }, e.currentTarget.getBoundingClientRect())}
                         >
 
                             <img
