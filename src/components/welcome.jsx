@@ -36,7 +36,7 @@ const setupTextHover = (container, type) => {
         letters.forEach((letter) => {
             const { left, width } = letter.getBoundingClientRect();
             const distance = Math.abs(e.clientX - (left + width / 2));
-            const intensity = Math.exp(-(distance ** 2) / 2000);
+            const intensity = Math.exp(-(distance ** 1.5) / 2000);
 
             const targetWeight = Math.round(base + (max - base) * intensity);
             animateLetter(letter, targetWeight);
@@ -77,7 +77,7 @@ function Welcome() {
                 {renderText(
                     'Hi, I\'m Blake! Welcome to my',
                     "text-3xl font-georama",
-                    400
+                    200
                 )}
             </p>
             <h1 ref={titleRef} className="cursor-default mt-5">

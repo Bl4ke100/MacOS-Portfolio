@@ -1,8 +1,6 @@
-import { WINDOW_CONFIG } from '#constants';
+import { WINDOW_CONFIG, INITIAL_Z_INDEX } from '#constants';
 import { create } from 'zustand'
 import { immer } from 'zustand/middleware/immer';
-
-const INITIAL_Z_INDEX = 10;
 
 const useWindowStore = create(immer((set) => ({
     windows: WINDOW_CONFIG,
@@ -14,6 +12,10 @@ const useWindowStore = create(immer((set) => ({
         win.zIndex = state.nextZIndex;
         win.triggerRect = rect; 
         state.nextZIndex++;
+    }),
+
+    setWindowData: (windowKey, data) => set((state) => {
+        state.windows[windowKey].data = JSON.parse(JSON.stringify(data));
     }),
 
     closeWindow: (windowKey) => set((state) => {
