@@ -106,24 +106,32 @@ const techStack = [
     },
     {
         category: "Mobile",
-        items: ["React Native", "Expo"],
+        items: ["React Native", "Expo", "Java"],
     },
     {
-        category: "Styling",
-        items: ["Tailwind CSS", "Sass", "CSS"],
+        category: "Styling & UI",
+        items: ["Tailwind CSS", "CSS", "GSAP", "Bootstrap"],
     },
     {
         category: "Backend",
-        items: ["Node.js", "Express", "NestJS", "Hono"],
+        items: ["Node.js", "Java", "Hibernate", "PHP"],
     },
     {
         category: "Database",
-        items: ["MongoDB", "PostgreSQL"],
+        items: ["MongoDB", "MySQL", "SQLite", "Firebase"],
     },
     {
-        category: "Dev Tools",
-        items: ["Git", "GitHub", "Docker"],
+        category: "Tools & Cloud",
+        items: ["Git", "GitHub", "Netlify", "Vercel"],
     },
+    {
+        category: "Creative tools",
+        items: ["Unity", "Photoshop", "After Effects"],
+    },
+    {
+        category: "Hardware",
+        items: ["Arduino"],
+    }
 ];
 
 const socials = [
