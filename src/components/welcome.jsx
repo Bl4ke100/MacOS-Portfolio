@@ -80,7 +80,7 @@ function Welcome() {
                     400
                 )}
             </p>
-            <h1 ref={titleRef} className="cursor-default">
+            <h1 ref={titleRef} className="cursor-default mt-5">
                 {renderText(
                     'Portfolio',
                     "text-9xl italic font-georama",
