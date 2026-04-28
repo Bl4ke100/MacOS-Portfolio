@@ -10,6 +10,8 @@ import Finder from "#windows/Finder";
 import Text from "#windows/Text";
 import Img from "#windows/Img";
 import Contact from "#windows/Contact";
+import Home from "#components/Home";
+import Photos from "#windows/Photos";
 gsap.registerPlugin(Draggable)
 
 const App = () => {
@@ -26,6 +28,9 @@ const App = () => {
       <Finder />
       <Text />
       <Img />
+      <Home />
+
+      <Photos />
     </main>
   )
 }
