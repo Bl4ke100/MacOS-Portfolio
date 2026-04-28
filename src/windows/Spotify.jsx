@@ -141,6 +141,38 @@ const Spotify = () => {
                                 ))}
                             </div>
                         </div>
+
+                        {/* Recently Played */}
+                        <div>
+                            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Recently Played</h4>
+                            <div className="grid grid-cols-2 gap-3">
+                                {stats?.recentlyPlayed?.map((track, i) => (
+                                    <div key={i} className="flex items-center gap-2 bg-white/5 p-2 rounded-md">
+                                        <img src={track.cover} className="w-8 h-8 rounded" alt="" />
+                                        <div className="min-w-0">
+                                            <p className="text-[10px] font-bold truncate">{track.title}</p>
+                                            <p className="text-[9px] text-gray-500 truncate">{track.artist}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Public Playlists */}
+                        <div className="pb-8">
+                            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">My Collections</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                                {stats?.playlists?.map((p, i) => (
+                                    <a key={i} href={p.url} target="_blank" rel="noreferrer" className="group">
+                                        <div className="relative aspect-square mb-2 overflow-hidden rounded-lg shadow-lg">
+                                            <img src={p.cover} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" alt="" />
+                                        </div>
+                                        <p className="text-[11px] font-bold truncate">{p.name}</p>
+                                        <p className="text-[9px] text-gray-500">{p.tracks} songs</p>
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 )}
             </div>
