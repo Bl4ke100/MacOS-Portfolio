@@ -20,51 +20,46 @@ exports.handler = async () => {
             return res.ok ? await res.json() : { items: [] };
         };
 
-        const [tracksData, artistsData, recentData, playlistData] = await Promise.all([
-            safeFetch(`https://api.spotify.com/v1/me/top/tracks?limit=5`),
-            safeFetch(`https://api.spotify.com/v1/me/top/artists?limit=8`),
-            safeFetch(`https://api.spotify.com/v1/me/player/recently-played?limit=4`),
-            safeFetch(`https://api.spotify.com/v1/me/playlists?limit=4`)
+        const [tracksData, artistsData, recentData] = await Promise.all([
+            safeFetch(`https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5`),
+            safeFetch(`https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5`),
+            safeFetch(`https://api.spotify.com/v1/me/player/recently-played?limit=4`)
         ]);
 
-        const recentlyPlayed = (recentData.items || []).slice(0, 4).map(item => ({
+        const recentlyPlayed = (recentData.items || []).map(item => ({
             title: item.track.name,
             artist: item.track.artists[0].name,
-            cover: item.track.album.images[2]?.url
+            // Grab the best available track image (often 64x64 or 300x300)
+            cover: item.track.album.images?.[2]?.url || item.track.album.images?.[0]?.url
         }));
 
-        const playlists = (playlistData.items || []).slice(0, 2).map(p => ({
-            name: p.name,
-            url: p.external_urls.spotify,
-            cover: p.images[0]?.url,
-            tracks: p.tracks.total
-        }));
-
-        const tracks = (tracksData.items || []).slice(0, 5).map(track => ({
+        const tracks = (tracksData.items || []).map(track => ({
             title: track.name,
             artist: track.artists.map(a => a.name).join(', '),
             url: track.external_urls.spotify,
-            cover: track.album.images[2]?.url
+            cover: track.album.images?.[1]?.url || track.album.images?.[0]?.url
         }));
 
-        let allGenres = [];
-        const artists = (artistsData.items || []).slice(0, 5).map(artist => {
-            allGenres.push(...(artist.genres || []));
+        const artists = (artistsData.items || []).map(artist => {
+            // Find the best image for circular crop (closest to 160px is best)
+            const bestImage = artist.images?.reduce((best, current) => {
+                const target = 160;
+                if (!best || Math.abs(current.width - target) < Math.abs(best.width - target)) {
+                    return current;
+                }
+                return best;
+            }, null);
+
             return {
                 name: artist.name,
-                image: artist.images[2]?.url || artist.images[0]?.url
+                url: artist.external_urls.spotify,
+                image: bestImage?.url || ''
             };
         });
 
-        const genreCounts = allGenres.reduce((acc, genre) => {
-            acc[genre] = (acc[genre] || 0) + 1;
-            return acc;
-        }, {});
-        const topGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]).slice(0, 3).map(g => g[0]);
-
         return {
             statusCode: 200,
-            body: JSON.stringify({ tracks, artists, topGenres, recentlyPlayed, playlists }),
+            body: JSON.stringify({ tracks, artists, recentlyPlayed }),
         };
     } catch (error) {
         return { statusCode: 500, body: JSON.stringify({ error: error.message }) };

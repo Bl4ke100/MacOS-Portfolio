@@ -44,6 +44,7 @@ const Spotify = () => {
         fetchStats();
     }, []);
 
+    // Replacement return block for src/components/Spotify.jsx
     return (
         <div className="w-full h-full flex flex-col bg-[#121212] rounded-xl overflow-hidden shadow-2xl border border-gray-800">
             <div id='window-header' className="flex items-center px-4 py-2 bg-[#181818] border-b border-[#282828] justify-between">
@@ -74,12 +75,12 @@ const Spotify = () => {
                     <div className="flex flex-col items-center h-full w-full">
                         {liveTrack ? (
                             <>
-                                <a href={liveTrack.songUrl} target="_blank" rel="noreferrer" className="w-64 h-64 mt-4 mb-8 shadow-2xl rounded-md overflow-hidden group">
+                                <a href={liveTrack.songUrl} target="_blank" rel="noreferrer" className="w-56 h-56 mt-4 mb-8 shadow-2xl rounded-md overflow-hidden group">
                                     <img src={liveTrack.albumArt} alt={liveTrack.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                                 </a>
-                                <div className="w-full text-center mb-8 px-4">
-                                    <h3 className="text-2xl font-bold truncate text-white">{liveTrack.title}</h3>
-                                    <p className="text-base text-gray-400 truncate">{liveTrack.artist}</p>
+                                <div className="w-full text-center mb-8">
+                                    <h3 className="text-2xl font-bold truncate text-white px-4">{liveTrack.title}</h3>
+                                    <p className="text-base text-gray-400 truncate px-4">{liveTrack.artist}</p>
                                 </div>
                                 <div className="flex items-center gap-8 mt-auto mb-6">
                                     <SkipBack className="w-7 h-7 text-gray-400 hover:text-white cursor-pointer" />
@@ -101,30 +102,22 @@ const Spotify = () => {
                         ) : (
                             <div className="flex flex-col items-center justify-center h-full text-center">
                                 <Music className="w-12 h-12 text-gray-600 mb-4" />
-                                <p className="text-gray-400 text-sm font-medium">Not playing anything right now.</p>
+                                <p className="text-gray-400 text-sm">Not playing anything right now.</p>
                             </div>
                         )}
                     </div>
                 ) : (
                     <div className="flex flex-col gap-10 animate-in fade-in duration-300 w-full">
-                        {/* Header Genres */}
-                        <div className="flex flex-wrap gap-2">
-                            {stats?.topGenres?.map(genre => (
-                                <span key={genre} className="px-3 py-1 bg-white/10 text-[10px] text-white rounded-full uppercase tracking-widest font-bold border border-white/5 shadow-sm">
-                                    {genre}
-                                </span>
-                            ))}
-                        </div>
 
-                        {/* Main Content Grid: Tracks (Left) & Artists (Right) */}
-                        <div className="grid grid-cols-5 gap-8 w-full">
-                            {/* On Repeat (3/5 width) */}
-                            <div className="col-span-3">
-                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">On Repeat</h4>
-                                <div className="flex flex-col gap-2">
-                                    {stats?.tracks?.map((track, i) => (
-                                        <a key={i} href={track.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 group hover:bg-white/5 p-2 rounded-md transition-all w-full">
-                                            <img src={track.cover} alt="" className="w-12 h-12 rounded shadow-md flex-shrink-0" />
+                        {/* Top Content Row: On Repeat (left) & Top Artists (right) */}
+                        <div className="grid grid-cols-2 gap-x-12 w-full">
+                            {/* On Repeat */}
+                            <div>
+                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">On Repeat</h4>
+                                <div className="flex flex-col gap-3">
+                                    {stats?.tracks?.slice(0, 5).map((track, i) => (
+                                        <a key={i} href={track.url} target="_blank" rel="noreferrer" className="flex items-center gap-4 group w-full">
+                                            <img src={track.cover} alt="" className="w-12 h-12 rounded flex-shrink-0" />
                                             <div className="flex-1 min-w-0">
                                                 <p className="text-sm font-bold text-white truncate group-hover:text-green-400 transition-colors">{track.title}</p>
                                                 <p className="text-xs text-gray-400 truncate">{track.artist}</p>
@@ -134,52 +127,38 @@ const Spotify = () => {
                                 </div>
                             </div>
 
-                            {/* Top Artists Column (2/5 width) */}
-                            <div className="col-span-2">
-                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Top Artists</h4>
-                                <div className="flex flex-col gap-4">
+                            {/* Top Artists - Horizontal Flex inside grid column */}
+                            <div>
+                                <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Top Artists</h4>
+                                <div className="flex flex-wrap gap-x-6 gap-y-8 justify-between">
                                     {stats?.artists?.slice(0, 5).map((artist, i) => (
-                                        <div key={i} className="flex items-center gap-3 group">
-                                            <img src={artist.image} className="w-12 h-12 rounded-full object-cover shadow-lg border border-white/10 group-hover:scale-105 transition-transform" alt="" />
-                                            <p className="text-xs text-gray-300 font-bold truncate group-hover:text-white transition-colors">{artist.name}</p>
-                                        </div>
+                                        <a key={i} href={artist.url} target="_blank" rel="noreferrer" className="flex flex-col items-center gap-2 group w-28">
+                                            <div className="w-28 h-28 rounded-full overflow-hidden shadow-2xl border border-white/5">
+                                                <img src={artist.image} className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300" alt="" />
+                                            </div>
+                                            <p className="text-xs text-gray-300 font-bold text-center w-full group-hover:text-white transition-colors">{artist.name}</p>
+                                        </a>
                                     ))}
                                 </div>
                             </div>
                         </div>
 
-                        {/* Recently Played - Grid Layout */}
-                        <div className="w-full">
-                            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Recently Played</h4>
-                            <div className="grid grid-cols-2 gap-3">
+                        {/* Recently Played - Grid Layout of dark buttons */}
+                        <div className="pb-10 w-full">
+                            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-6">Recently Played</h4>
+                            <div className="grid grid-cols-2 gap-4 w-full">
                                 {stats?.recentlyPlayed?.slice(0, 4).map((track, i) => (
-                                    <div key={i} className="flex items-center gap-3 bg-white/5 p-2 rounded-lg border border-white/5 hover:bg-white/10 transition-colors cursor-default">
-                                        <img src={track.cover} className="w-10 h-10 rounded shadow-sm" alt="" />
-                                        <div className="min-w-0">
-                                            <p className="text-[10px] font-bold text-white truncate">{track.title}</p>
-                                            <p className="text-[9px] text-gray-500 truncate">{track.artist}</p>
+                                    <div key={i} className="flex items-center gap-3 bg-[#1e1e1e] p-3 rounded-full border border-gray-800 hover:bg-[#2a2a2a] transition-colors cursor-default">
+                                        <img src={track.cover} className="w-10 h-10 rounded-full flex-shrink-0" alt="" />
+                                        <div className="min-w-0 flex-1 px-1">
+                                            <p className="text-[11px] font-bold text-white truncate">{track.title}</p>
+                                            <p className="text-[10px] text-gray-500 truncate">{track.artist}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
 
-                        {/* My Collections */}
-                        <div className="pb-12 w-full">
-                            <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">My Collections</h4>
-                            <div className="grid grid-cols-2 gap-6 w-full">
-                                {stats?.playlists?.map((p, i) => (
-                                    <a key={i} href={p.url} target="_blank" rel="noreferrer" className="group block w-full">
-                                        <div className="relative aspect-square mb-3 overflow-hidden rounded-xl shadow-xl bg-[#282828]">
-                                            <img src={p.cover} className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-700 ease-in-out" alt={p.name} />
-                                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
-                                        </div>
-                                        <p className="text-[12px] font-bold truncate text-white group-hover:text-green-400 transition-colors">{p.name}</p>
-                                        <p className="text-[10px] text-gray-500 font-medium">{p.tracks} tracks</p>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
                     </div>
                 )}
             </div>
