@@ -4,8 +4,8 @@ const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
-const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5`;
-const TOP_ARTISTS_ENDPOINT = `https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5`;
+const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?limit=5`;
+const TOP_ARTISTS_ENDPOINT = `https://api.spotify.com/v1/me/top/artists?limit=5`;
 
 exports.handler = async () => {
     try {
@@ -29,7 +29,7 @@ exports.handler = async () => {
             title: track.name,
             artist: track.artists.map(a => a.name).join(', '),
             url: track.external_urls.spotify,
-            cover: track.album.images[2].url
+            cover: track.album.images[2]?.url || track.album.images[0]?.url
         }));
 
         let allGenres = [];
@@ -38,7 +38,7 @@ exports.handler = async () => {
             return {
                 name: artist.name,
                 url: artist.external_urls.spotify,
-                image: artist.images[2].url
+                image: artist.images[2]?.url || artist.images[0]?.url
             };
         });
 
