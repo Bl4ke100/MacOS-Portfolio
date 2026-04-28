@@ -4,36 +4,45 @@ import WindowControls from '#components/WindowControls';
 import { Play, Pause, SkipBack, SkipForward, Music, BarChart2 } from 'lucide-react';
 
 const Spotify = () => {
-    const [activeTab, setActiveTab] = useState('live'); // 'live' or 'stats'
+    const [activeTab, setActiveTab] = useState('live');
     const [liveTrack, setLiveTrack] = useState(null);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // 1. Fetch Live Music (Loops every 15s)
     useEffect(() => {
-        const fetchData = async () => {
+        const fetchLive = async () => {
             try {
-                // Fetch Live Music
                 const liveRes = await fetch('/.netlify/functions/spotify');
                 const liveData = await liveRes.json();
                 setLiveTrack(liveData.isPlaying ? liveData : null);
-
-                // Fetch Stats
-                if (!stats) {
-                    const statsRes = await fetch('/.netlify/functions/spotify-stats');
-                    const statsData = await statsRes.json();
-                    setStats(statsData);
-                }
-                setLoading(false);
             } catch (error) {
-                console.error("Spotify Data Error", error);
-                setLoading(false);
+                console.error("Live Track Error", error);
             }
         };
 
-        fetchData();
-        const interval = setInterval(fetchData, 15000);
+        fetchLive();
+        const interval = setInterval(fetchLive, 15000);
         return () => clearInterval(interval);
-    }, [stats]);
+    }, []);
+
+    // 2. Fetch Stats (Only runs ONCE when the component loads)
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const statsRes = await fetch('/.netlify/functions/spotify-stats');
+                const statsData = await statsRes.json();
+                if (statsData && statsData.tracks) {
+                    setStats(statsData);
+                }
+            } catch (error) {
+                console.error("Stats Error", error);
+            }
+            setLoading(false);
+        };
+
+        fetchStats();
+    }, []);
 
     return (
         <div className="w-[380px] h-[550px] flex flex-col bg-[#121212] rounded-xl overflow-hidden shadow-2xl border border-gray-800">
@@ -42,7 +51,6 @@ const Spotify = () => {
                     <WindowControls target="spotify" />
                     <p className="ml-4 text-xs font-bold text-gray-400 tracking-widest uppercase">Spotify</p>
                 </div>
-                {/* Tabs */}
                 <div className="flex gap-3 text-gray-400">
                     <Music
                         size={16}
@@ -99,7 +107,6 @@ const Spotify = () => {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-8 animate-in fade-in duration-300">
-                        {/* Genres */}
                         <div className="flex flex-wrap gap-2 justify-center">
                             {stats?.topGenres?.map(genre => (
                                 <span key={genre} className="px-3 py-1 bg-white/10 text-xs text-white rounded-full uppercase tracking-wider font-semibold border border-white/5">
@@ -108,7 +115,6 @@ const Spotify = () => {
                             ))}
                         </div>
 
-                        {/* Top Tracks */}
                         <div>
                             <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">On Repeat</h4>
                             <div className="flex flex-col gap-3">
@@ -124,7 +130,6 @@ const Spotify = () => {
                             </div>
                         </div>
 
-                        {/* Top Artists */}
                         <div className="pb-4">
                             <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Top Artists</h4>
                             <div className="flex gap-4 overflow-x-auto pb-2 custom-scrollbar">
