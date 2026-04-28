@@ -72,15 +72,15 @@ function Welcome() {
     }, []);
 
     return (
-        <section id="welcome" className="relative z-10">
-            <p ref={subtitleRef} className="cursor-default">
+        <section id="welcome">
+            <p ref={subtitleRef} className="cursor-default mb-5">
                 {renderText(
                     'Hi, I\'m Blake! Welcome to my',
                     "text-3xl font-georama",
                     200
                 )}
             </p>
-            <h1 ref={titleRef} className="cursor-default mt-5">
+            <h1 ref={titleRef} className="cursor-default">
                 {renderText(
                     'Portfolio',
                     "text-9xl italic font-georama",

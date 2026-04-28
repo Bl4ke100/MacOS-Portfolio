@@ -168,13 +168,6 @@ const socials = [
         link: "mailto:janindumagamage100@gmail.com",
     },
     {
-        id: 3,
-        text: "Twitter/X",
-        icon: "/icons/twitter.svg",
-        bg: "#ff866b",
-        link: "https://x.com/jsmasterypro",
-    },
-    {
         id: 4,
         text: "LinkedIn",
         icon: "/icons/linkedin.svg",
@@ -281,7 +274,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "gamevault-web.png",
-                    icon: "/images/image.png",
+                    icon: "/images/gamevault-web.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
@@ -323,7 +316,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "gamevault-mobile.png",
-                    icon: "/images/image.png",
+                    icon: "/images/gamevault-mobile.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 left-80",
@@ -335,7 +328,7 @@ const WORK_LOCATION = {
         // ▶ Project 3: Flow Chat App
         {
             id: 7,
-            name: "Flow Chat",
+            name: "Flow Chat Application",
             icon: "/images/folder.png",
             kind: "folder",
             position: "top-10 left-80",
@@ -374,7 +367,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "flow-preview.png",
-                    icon: "/images/image.png",
+                    icon: "/images/flow.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
@@ -458,11 +451,11 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "sms-preview.png",
-                    icon: "/images/image.png",
+                    icon: "/images/sms-preview.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
-                    imageUrl: "/images/sms.png",
+                    imageUrl: "/images/sms-preview.png",
                 },
             ],
         },
@@ -479,29 +472,20 @@ const ABOUT_LOCATION = {
         {
             id: 1,
             name: "me.png",
-            icon: "/images/image.png",
+            icon: "/images/me2.png",
             kind: "file",
             fileType: "img",
             position: "top-10 left-5",
-            imageUrl: "/images/adrian.jpg",
+            imageUrl: "/images/me2.png",
         },
         {
             id: 2,
             name: "casual-me.png",
-            icon: "/images/image.png",
+            icon: "/images/casual-me.png",
             kind: "file",
             fileType: "img",
             position: "top-28 right-72",
-            imageUrl: "/images/adrian-2.jpg",
-        },
-        {
-            id: 3,
-            name: "conference-me.png",
-            icon: "/images/image.png",
-            kind: "file",
-            fileType: "img",
-            position: "top-52 left-80",
-            imageUrl: "/images/adrian-3.jpeg",
+            imageUrl: "/images/casual-me.png",
         },
         {
             id: 4,
@@ -510,13 +494,12 @@ const ABOUT_LOCATION = {
             kind: "file",
             fileType: "txt",
             position: "top-60 left-5",
-            subtitle: "Meet the Developer Behind the Code",
-            image: "/images/adrian.jpg",
+            image: "/images/cat-hello.gif",
             description: [
-                "Hey! I’m Adrian 👋, a web developer who enjoys building sleek, interactive websites that actually work well.",
-                "I specialize in JavaScript, React, and Next.js—and I love making things feel smooth, fast, and just a little bit delightful.",
+                "Hey, I'm Blake 👋. I'm a Full Stack & Frontend Software Engineer based in Sri Lanka currently wrapping up my Software Engineering degree",
+                "I specialize in building scalable web and mobile applications using React, Next.js, and Java.",
                 "I’m big on clean UI, good UX, and writing code that doesn’t need a search party to debug.",
-                "Outside of dev work, you'll find me tweaking layouts at 2AM, sipping overpriced coffee, or impulse-buying gadgets I absolutely convinced myself I needed 😅",
+                "When I'm not coding, you can usually find me pushing my PC hardware to the limit, modding Cyberpunk 2077 for maximum photorealism, or deep into a story-driven RPG.",
             ],
         },
     ],
@@ -541,31 +524,38 @@ const RESUME_LOCATION = {
     ],
 };
 
-const TRASH_LOCATION = {
+const MY_RIG_LOCATION = {
     id: 4,
-    type: "trash",
-    name: "Trash",
-    icon: "/icons/trash.svg",
+    type: "my-rig",
+    name: "My Rig",
+    icon: "/icons/rig.svg",
     kind: "folder",
     children: [
         {
             id: 1,
-            name: "trash1.png",
+            name: "my-rig-1.png",
             icon: "/images/image.png",
             kind: "file",
             fileType: "img",
-            position: "top-10 left-10",
-            imageUrl: "/images/trash-1.png",
+            imageUrl: "/images/my-rig-1.png",
         },
         {
             id: 2,
-            name: "trash2.png",
+            name: "my-rig-2.png",
             icon: "/images/image.png",
             kind: "file",
             fileType: "img",
-            position: "top-40 left-80",
-            imageUrl: "/images/trash-2.png",
+            imageUrl: "/images/my-rig-2.png",
         },
+        {
+            id: 3,
+            name: "my-rig-3.png",
+            icon: "/images/image.png",
+            kind: "file",
+            fileType: "img",
+            imageUrl: "/images/my-rig-3.png",
+        },
+
     ],
 };
 
@@ -573,7 +563,7 @@ export const locations = {
     work: WORK_LOCATION,
     about: ABOUT_LOCATION,
     resume: RESUME_LOCATION,
-    trash: TRASH_LOCATION,
+    "my-rig": MY_RIG_LOCATION,
 };
 
 const INITIAL_Z_INDEX = 1000;

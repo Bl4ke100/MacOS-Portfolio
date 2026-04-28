@@ -25,7 +25,7 @@ const Dock = () => {
                 const intensity = Math.exp(-(distance ** 2) / 2000);
                 gsap.to(icon, {
                     scale: 1 + 0.25 * intensity,
-                    y: -30 * intensity,
+                    y: -25 * intensity,
                     duration: 0.3,
                     ease: "power1.out"
                 })

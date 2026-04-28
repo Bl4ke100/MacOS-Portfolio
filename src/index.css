@@ -67,7 +67,7 @@ body {
   }
 
   #welcome {
-    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10;
+    @apply text-gray-200 flex flex-col justify-center items-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none max-sm:h-screen max-sm:w-full max-sm:px-10 z-0;
 
     .small-screen {
       @apply sm:hidden m-7 bg-red-300/20 backdrop-blur-lg p-3 rounded-md absolute top-10;
@@ -377,13 +377,13 @@ body {
   }
 
   #home {
-    @apply absolute inset-0 z-0 max-sm:hidden;
+    @apply absolute inset-0 z-10 max-sm:hidden pointer-events-none;
 
     ul {
       @apply flex flex-col flex-wrap-reverse gap-4 p-5 pt-16 h-full content-end items-end justify-start;
 
       li {
-        @apply z-0 select-none flex items-center flex-col w-24 gap-1 cursor-pointer;
+        @apply z-0 select-none flex items-center flex-col w-24 gap-1 cursor-pointer pointer-events-auto;
 
         img {
           @apply group-hover:bg-gray-950/10 p-1 rounded-md;
