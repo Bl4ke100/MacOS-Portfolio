@@ -274,7 +274,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "gamevault-web.png",
-                    icon: "/images/gamevault-web.png",
+                    icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
@@ -316,7 +316,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "gamevault-mobile.png",
-                    icon: "/images/gamevault-mobile.png",
+                    icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 left-80",
@@ -367,7 +367,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "flow-preview.png",
-                    icon: "/images/flow.png",
+                    icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
@@ -451,7 +451,7 @@ const WORK_LOCATION = {
                 {
                     id: 4,
                     name: "sms-preview.png",
-                    icon: "/images/sms-preview.png",
+                    icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
@@ -472,7 +472,7 @@ const ABOUT_LOCATION = {
         {
             id: 1,
             name: "me.png",
-            icon: "/images/me2.png",
+            icon: "/images/image.png",
             kind: "file",
             fileType: "img",
             position: "top-10 left-5",
@@ -481,7 +481,7 @@ const ABOUT_LOCATION = {
         {
             id: 2,
             name: "casual-me.png",
-            icon: "/images/casual-me.png",
+            icon: "/images/image.png",
             kind: "file",
             fileType: "img",
             position: "top-28 right-72",
