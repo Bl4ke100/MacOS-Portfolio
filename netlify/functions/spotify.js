@@ -8,7 +8,6 @@ const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 
 exports.handler = async (event, context) => {
     try {
-        // 1. Trade the refresh token for a fresh access token
         const tokenResponse = await fetch(TOKEN_ENDPOINT, {
             method: 'POST',
             headers: {
@@ -22,21 +21,18 @@ exports.handler = async (event, context) => {
         });
         const { access_token } = await tokenResponse.json();
 
-        // 2. Fetch what you are currently listening to
         const response = await fetch(NOW_PLAYING_ENDPOINT, {
             headers: {
                 Authorization: `Bearer ${access_token}`,
             },
         });
 
-        // 204 means nothing is playing right now
         if (response.status === 204 || response.status > 400) {
             return { statusCode: 200, body: JSON.stringify({ isPlaying: false }) };
         }
 
         const song = await response.json();
 
-        // 3. Format the data so your frontend doesn't have to work hard
         if (song.item) {
             return {
                 statusCode: 200,
@@ -51,7 +47,7 @@ exports.handler = async (event, context) => {
         }
 
         return { statusCode: 200, body: JSON.stringify({ isPlaying: false }) };
-
+        
     } catch (error) {
         return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch Spotify' }) };
     }
