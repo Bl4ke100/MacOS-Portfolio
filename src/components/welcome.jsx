@@ -10,7 +10,7 @@ const FONT_WEIGHTS = {
 const renderText = (text, className, baseWeight = 400) => {
     return [...text].map((char, i) => (
         <span key={i} className={className} style={{
-            fontVariationSettings: `'wght' ${baseWeight}`,
+            fontWeight: baseWeight,
             display: 'inline-block'
         }}>
             {char === ' ' ? '\u00A0' : char}
@@ -28,7 +28,7 @@ const setupTextHover = (container, type) => {
         return gsap.to(letter, {
             duration,
             ease: "power2.out",
-            fontVariationSettings: `'wght' ${weight}`
+            fontWeight: weight
         })
     }
 
@@ -72,7 +72,7 @@ function Welcome() {
     }, []);
 
     return (
-        <section id="welcome">
+        <section id="welcome" className="relative z-10">
             <p ref={subtitleRef} className="cursor-default">
                 {renderText(
                     'Hi, I\'m Blake! Welcome to my',

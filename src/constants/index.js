@@ -38,39 +38,57 @@ const navIcons = [
 const dockApps = [
     {
         id: "finder",
-        name: "Portfolio", // was "Finder"
+        name: "Portfolio",
         icon: "finder.png",
         canOpen: true,
     },
     {
         id: "safari",
-        name: "Articles", // was "Safari"
+        name: "Articles",
         icon: "safari.png",
         canOpen: true,
     },
     {
         id: "photos",
-        name: "Gallery", // was "Photos"
+        name: "Gallery",
         icon: "photos.png",
         canOpen: true,
     },
     {
         id: "contact",
-        name: "Contact", // or "Get in touch"
+        name: "Contact",
         icon: "contact.png",
         canOpen: true,
     },
     {
         id: "terminal",
-        name: "Skills", // was "Terminal"
+        name: "Skills",
         icon: "terminal.png",
         canOpen: true,
     },
     {
-        id: "trash",
-        name: "Archive", // was "Trash"
-        icon: "trash.png",
-        canOpen: false,
+        id: "spotify",
+        name: "Spotify",
+        icon: "spotify.png",
+        canOpen: true,
+    },
+    {
+        id: "youtube",
+        name: "YouTube",
+        icon: "youtube.png",
+        canOpen: true,
+    },
+    {
+        id: "steam",
+        name: "Steam",
+        icon: "steam.png",
+        canOpen: true,
+    },
+    {
+        id: "tiktok",
+        name: "TikTok",
+        icon: "tiktok.png",
+        canOpen: true,
     },
 ];
 
@@ -140,14 +158,14 @@ const socials = [
         text: "Github",
         icon: "/icons/github.svg",
         bg: "#f4656b",
-        link: "https://github.com/JavaScript-Mastery-Pro",
+        link: "https://github.com/Bl4ke100",
     },
     {
         id: 2,
-        text: "Platform",
-        icon: "/icons/atom.svg",
+        text: "Email",
+        icon: "/icons/email.svg",
         bg: "#4bcb63",
-        link: "https://jsmastery.com/",
+        link: "mailto:janindumagamage100@gmail.com",
     },
     {
         id: 3,
@@ -161,7 +179,7 @@ const socials = [
         text: "LinkedIn",
         icon: "/icons/linkedin.svg",
         bg: "#05b6f6",
-        link: "https://www.linkedin.com/company/javascriptmastery/posts/?feedView=all",
+        link: "https://www.linkedin.com/in/janindu-magamage-b630613ba/",
     },
 ];
 
@@ -230,63 +248,52 @@ const WORK_LOCATION = {
     icon: "/icons/work.svg",
     kind: "folder",
     children: [
-        // ▶ Project 1
+        // ▶ Project 1: GameVault Web
         {
             id: 5,
-            name: "Nike Ecommerce Website Application",
+            name: "GameVault Web",
             icon: "/images/folder.png",
             kind: "folder",
-            position: "top-10 left-5", // icon position inside Finder
-            windowPosition: "top-[5vh] left-5", // optional: Finder window position
+            position: "top-10 left-5",
+            windowPosition: "top-[5vh] left-5",
             children: [
                 {
                     id: 1,
-                    name: "Nike Project.txt",
+                    name: "GameVault Web.txt",
                     icon: "/images/txt.png",
                     kind: "file",
                     fileType: "txt",
                     position: "top-5 left-10",
                     description: [
-                        "The Nike eCommerce website is a sleek and modern platform designed for shopping the latest Nike collections.",
-                        "Instead of a simple online store, it delivers an immersive experience with bold visuals, interactive product displays, and smooth navigation.",
-                        "Think of it like walking into a flagship Nike store—but right from your phone or laptop.",
-                        "It's built with Next.js and Tailwind, ensuring fast performance, responsive design, and a clean, premium look.",
+                        "GameVault Web is a digital storefront designed specifically for browsing and purchasing game products.",
+                        "It focuses on delivering a sleek, modern UI with smooth navigation to enhance the shopping experience.",
                     ],
                 },
                 {
                     id: 2,
-                    name: "nike.com",
+                    name: "github.com",
                     icon: "/images/safari.png",
                     kind: "file",
                     fileType: "url",
-                    href: "https://youtu.be/fZdTYswuZjU?si=Awjl-pIst9e09_UU",
+                    href: "https://github.com/Bl4ke100/GameVault_Web",
                     position: "top-10 right-20",
                 },
                 {
                     id: 4,
-                    name: "nike.png",
+                    name: "gamevault-web.png",
                     icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
-                    imageUrl: "/images/project-1.png",
-                },
-                {
-                    id: 5,
-                    name: "Design.fig",
-                    icon: "/images/plain.png",
-                    kind: "file",
-                    fileType: "fig",
-                    href: "https://google.com",
-                    position: "top-60 right-20",
+                    imageUrl: "/images/gamevault-web.png",
                 },
             ],
         },
 
-        // ▶ Project 2
+        // ▶ Project 2: GameVault Mobile
         {
             id: 6,
-            name: "AI Resume Analyzer",
+            name: "GameVault Mobile",
             icon: "/images/folder.png",
             kind: "folder",
             position: "top-52 right-80",
@@ -294,52 +301,41 @@ const WORK_LOCATION = {
             children: [
                 {
                     id: 1,
-                    name: "AI Resume Analyzer Project.txt",
+                    name: "GameVault Mobile.txt",
                     icon: "/images/txt.png",
                     kind: "file",
                     fileType: "txt",
                     position: "top-5 right-10",
                     description: [
-                        "AI Resume Analyzer is a smart tool that helps you perfect your resume with instant feedback.",
-                        "Instead of guessing what recruiters want, you get AI-powered insights on keywords, formatting, and overall impact.",
-                        "Think of it like having a career coach—pointing out strengths, fixing weaknesses, and boosting your chances of landing interviews.",
-                        "It's built with Next.js and Tailwind, so it runs fast, looks professional, and works seamlessly on any device.",
+                        "GameVault Mobile is the m-commerce companion app for digital game products.",
+                        "Developed as part of my academic coursework, it brings the complete digital storefront experience natively to mobile devices.",
                     ],
                 },
                 {
                     id: 2,
-                    name: "ai-resume-analyzer.com",
+                    name: "github.com",
                     icon: "/images/safari.png",
                     kind: "file",
                     fileType: "url",
-                    href: "https://youtu.be/iYOz165wGkQ?si=R1hs8Legl200m0Cl",
+                    href: "https://github.com/Bl4ke100/GameVault-Mobile",
                     position: "top-20 left-20",
                 },
                 {
                     id: 4,
-                    name: "ai-resume-analyzer.png",
+                    name: "gamevault-mobile.png",
                     icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 left-80",
-                    imageUrl: "/images/project-2.png",
-                },
-                {
-                    id: 5,
-                    name: "Design.fig",
-                    icon: "/images/plain.png",
-                    kind: "file",
-                    fileType: "fig",
-                    href: "https://google.com",
-                    position: "top-60 left-5",
+                    imageUrl: "/images/gamevault-mobile.png",
                 },
             ],
         },
 
-        // ▶ Project 3
+        // ▶ Project 3: Flow Chat App
         {
             id: 7,
-            name: "Food Delivery App",
+            name: "Flow Chat",
             icon: "/images/folder.png",
             kind: "folder",
             position: "top-10 left-80",
@@ -347,44 +343,126 @@ const WORK_LOCATION = {
             children: [
                 {
                     id: 1,
-                    name: "Food Delivery App Project.txt",
+                    name: "Flow App.txt",
                     icon: "/images/txt.png",
                     kind: "file",
                     fileType: "txt",
                     position: "top-5 left-10",
                     description: [
-                        "Our Food Delivery App is a fast and convenient way to order meals from your favorite restaurants.",
-                        "Instead of making calls or waiting in line, you can browse menus, customize orders, and track deliveries in real time.",
-                        "Think of it like having your favorite restaurants in your pocket—ready to deliver anytime, anywhere.",
-                        "It’s built with React Native, so it works smoothly on both iOS and Android with a clean, modern design.",
+                        "Flow is a real-time mobile chat application built for fast and seamless communication.",
+                        "It features a highly responsive React Native frontend paired with a robust and scalable Java Servlet backend.",
                     ],
                 },
                 {
                     id: 2,
-                    name: "food-delivery-app.com",
+                    name: "Frontend Repo",
                     icon: "/images/safari.png",
                     kind: "file",
                     fileType: "url",
-                    href: "https://youtu.be/LKrX390fJMw?si=cExkuVhf2DTV9G2-",
+                    href: "https://github.com/Bl4ke100/Flow---React-Native-Chat-Application-",
                     position: "top-10 right-20",
                 },
                 {
+                    id: 3,
+                    name: "Backend Repo",
+                    icon: "/images/safari.png",
+                    kind: "file",
+                    fileType: "url",
+                    href: "https://github.com/Bl4ke100/Flow---React-Native-Chat-Application-Backend",
+                    position: "top-30 right-20",
+                },
+                {
                     id: 4,
-                    name: "food-delivery-app.png",
+                    name: "flow-preview.png",
                     icon: "/images/image.png",
                     kind: "file",
                     fileType: "img",
                     position: "top-52 right-80",
-                    imageUrl: "/images/project-3.png",
+                    imageUrl: "/images/flow.png",
+                },
+            ],
+        },
+
+        // ▶ Project 4: Huros Ecommerce
+        {
+            id: 8,
+            name: "Huros Ecommerce",
+            icon: "/images/folder.png",
+            kind: "folder",
+            position: "top-52 left-20",
+            windowPosition: "top-[15vh] left-50",
+            children: [
+                {
+                    id: 1,
+                    name: "Huros Project.txt",
+                    icon: "/images/txt.png",
+                    kind: "file",
+                    fileType: "txt",
+                    position: "top-5 left-10",
+                    description: [
+                        "Huros is a full-featured e-commerce web application tailored for modern online retail.",
+                        "It includes complete product browsing, cart management, and user checkout flows.",
+                    ],
                 },
                 {
-                    id: 5,
-                    name: "Design.fig",
-                    icon: "/images/plain.png",
+                    id: 2,
+                    name: "github.com",
+                    icon: "/images/safari.png",
                     kind: "file",
-                    fileType: "fig",
-                    href: "https://google.com",
-                    position: "top-60 right-20",
+                    fileType: "url",
+                    href: "https://github.com/Bl4ke100/Huros-Ecommerce_web-app",
+                    position: "top-10 right-20",
+                },
+                {
+                    id: 4,
+                    name: "huros.png",
+                    icon: "/images/image.png",
+                    kind: "file",
+                    fileType: "img",
+                    position: "top-52 right-80",
+                    imageUrl: "/images/huros.png",
+                },
+            ],
+        },
+
+        // ▶ Project 5: School Management System
+        {
+            id: 9,
+            name: "School Management System",
+            icon: "/images/folder.png",
+            kind: "folder",
+            position: "top-[20rem] left-5",
+            windowPosition: "top-[25vh] left-[20vw]",
+            children: [
+                {
+                    id: 1,
+                    name: "SMS Details.txt",
+                    icon: "/images/txt.png",
+                    kind: "file",
+                    fileType: "txt",
+                    position: "top-5 left-10",
+                    description: [
+                        "A comprehensive School Management System designed to handle complex administrative workflows.",
+                        "Built during my tenure as a Full Stack Developer at Genex Software Solutions to streamline operations, records, and daily management tasks.",
+                    ],
+                },
+                {
+                    id: 2,
+                    name: "github.com",
+                    icon: "/images/safari.png",
+                    kind: "file",
+                    fileType: "url",
+                    href: "https://github.com/Bl4ke100/school-management-system",
+                    position: "top-10 right-20",
+                },
+                {
+                    id: 4,
+                    name: "sms-preview.png",
+                    icon: "/images/image.png",
+                    kind: "file",
+                    fileType: "img",
+                    position: "top-52 right-80",
+                    imageUrl: "/images/sms.png",
                 },
             ],
         },
@@ -509,6 +587,10 @@ const WINDOW_CONFIG = {
     terminal: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
     txtfile: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
     imgfile: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+    spotify: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+    youtube: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+    steam: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
+    tiktok: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
 };
 
 export { INITIAL_Z_INDEX, WINDOW_CONFIG };

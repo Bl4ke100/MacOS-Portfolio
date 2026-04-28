@@ -12,6 +12,10 @@ import Img from "#windows/Img";
 import Contact from "#windows/Contact";
 import Home from "#components/Home";
 import Photos from "#windows/Photos";
+import Spotify from "#windows/Spotify";
+import Youtube from "#windows/Youtube";
+import Steam from "#windows/Steam";
+import Tiktok from "#windows/Tiktok";
 gsap.registerPlugin(Draggable)
 
 const App = () => {
@@ -29,7 +33,10 @@ const App = () => {
       <Text />
       <Img />
       <Home />
-
+      <Spotify />
+      <Youtube />
+      <Steam />
+      <Tiktok />
       <Photos />
     </main>
   )

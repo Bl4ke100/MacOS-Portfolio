@@ -19,30 +19,44 @@ const WindowWrapper = (Component, windowKey) => {
             if (isOpen) setShouldRender(true);
         }, [isOpen]);
 
+        const randomPos = useRef({ x: 0, y: 0 });
+
         useGSAP(() => {
             const el = ref.current;
             if (!el) return;
 
-            let targetX = 0;
-            let targetY = 400;
+            let startX = 0;
+            let startY = window.innerHeight;
 
             if (triggerRect) {
-                const winRect = el.getBoundingClientRect();
-                targetX = (triggerRect.left + triggerRect.width / 2) - (winRect.left + winRect.width / 2);
-                targetY = (triggerRect.top + triggerRect.height / 2) - (winRect.top + winRect.height / 2);
+                // The dock icon center
+                startX = triggerRect.left + triggerRect.width / 2 - el.clientWidth / 2;
+                startY = triggerRect.top + triggerRect.height / 2 - el.clientHeight / 2;
             }
 
             if (isOpen) {
+                // Calculate random position when opening
+                // Leave roughly 120px for the dock at the bottom
+                const safeHeight = window.innerHeight - 120;
+                
+                const maxX = Math.max(0, window.innerWidth - (el.clientWidth || 800));
+                const maxY = Math.max(0, safeHeight - (el.clientHeight || 600));
+                
+                randomPos.current = {
+                    x: 20 + Math.random() * Math.max(0, maxX - 40),
+                    y: 20 + Math.random() * Math.max(0, maxY - 40)
+                };
+
                 // The OPEN Animation
                 gsap.fromTo(el, {
-                    x: targetX,
-                    y: targetY,
-                    scale: 0.5,
+                    x: startX,
+                    y: startY,
+                    scale: 0.1,
                     opacity: 0,
                     transformOrigin: "center center"
                 }, {
-                    x: 0,
-                    y: 0,
+                    x: randomPos.current.x,
+                    y: randomPos.current.y,
                     scale: 1,
                     opacity: 1,
                     duration: 0.55,
@@ -51,8 +65,8 @@ const WindowWrapper = (Component, windowKey) => {
             } else if (!isOpen && shouldRender) {
                 // The CLOSE Animation
                 gsap.to(el, {
-                    x: targetX,
-                    y: targetY,
+                    x: startX,
+                    y: startY,
                     scale: 0.05,
                     opacity: 0,
                     duration: 0.35,
@@ -62,7 +76,7 @@ const WindowWrapper = (Component, windowKey) => {
                     }
                 });
             }
-        }, [isOpen, shouldRender]);
+        }, [isOpen, shouldRender, triggerRect]);
 
         useGSAP(() => {
             const el = ref.current;
