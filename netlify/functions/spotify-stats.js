@@ -4,10 +4,6 @@ const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
-const TOP_TRACKS_ENDPOINT = `https://api.spotify.com/v1/me/top/tracks?limit=5`;
-const TOP_ARTISTS_ENDPOINT = `https://api.spotify.com/v1/me/top/artists?limit=8`;
-const RECENTLY_PLAYED_ENDPOINT = `https://api.spotify.com/v1/me/player/recently-played?limit=4`;
-const PLAYLISTS_ENDPOINT = `https://api.spotify.com/v1/me/playlists?limit=4`;
 
 exports.handler = async () => {
     try {
@@ -18,43 +14,42 @@ exports.handler = async () => {
         });
         const { access_token } = await tokenResponse.json();
 
-        const [tracksRes, artistsRes, recentRes, playlistRes] = await Promise.all([
-            fetch(TOP_TRACKS_ENDPOINT, { headers: { Authorization: `Bearer ${access_token}` } }),
-            fetch(TOP_ARTISTS_ENDPOINT, { headers: { Authorization: `Bearer ${access_token}` } }),
-            fetch(RECENTLY_PLAYED_ENDPOINT, { headers: { Authorization: `Bearer ${access_token}` } }),
-            fetch(PLAYLISTS_ENDPOINT, { headers: { Authorization: `Bearer ${access_token}` } })
+        // Helper to fetch and handle errors gracefully
+        const safeFetch = async (url) => {
+            const res = await fetch(url, { headers: { Authorization: `Bearer ${access_token}` } });
+            return res.ok ? await res.json() : { items: [] };
+        };
+
+        const [tracksData, artistsData, recentData, playlistData] = await Promise.all([
+            safeFetch(`https://api.spotify.com/v1/me/top/tracks?limit=5`),
+            safeFetch(`https://api.spotify.com/v1/me/top/artists?limit=8`),
+            safeFetch(`https://api.spotify.com/v1/me/player/recently-played?limit=4`),
+            safeFetch(`https://api.spotify.com/v1/me/playlists?limit=4`)
         ]);
 
-        const tracksData = await tracksRes.json();
-        const artistsData = await artistsRes.json();
-        const recentData = await recentRes.json();
-        const playlistData = await playlistRes.json();
-
-        // Map Recently Played
-        const recentlyPlayed = (recentData.items || []).map(item => ({
+        const recentlyPlayed = (recentData.items || []).slice(0, 4).map(item => ({
             title: item.track.name,
             artist: item.track.artists[0].name,
-            cover: item.track.album.images[2].url
+            cover: item.track.album.images[2]?.url
         }));
 
-        // Map Playlists
-        const playlists = (playlistData.items || []).map(p => ({
+        const playlists = (playlistData.items || []).slice(0, 2).map(p => ({
             name: p.name,
             url: p.external_urls.spotify,
             cover: p.images[0]?.url,
             tracks: p.tracks.total
         }));
 
-        const tracks = (tracksData.items || []).map(track => ({
+        const tracks = (tracksData.items || []).slice(0, 5).map(track => ({
             title: track.name,
             artist: track.artists.map(a => a.name).join(', '),
             url: track.external_urls.spotify,
-            cover: track.album.images[2].url
+            cover: track.album.images[2]?.url
         }));
 
         let allGenres = [];
-        const artists = (artistsData.items || []).map(artist => {
-            allGenres.push(...artist.genres);
+        const artists = (artistsData.items || []).slice(0, 5).map(artist => {
+            allGenres.push(...(artist.genres || []));
             return {
                 name: artist.name,
                 image: artist.images[2]?.url || artist.images[0]?.url
@@ -72,6 +67,6 @@ exports.handler = async () => {
             body: JSON.stringify({ tracks, artists, topGenres, recentlyPlayed, playlists }),
         };
     } catch (error) {
-        return { statusCode: 500, body: JSON.stringify({ error: 'Failed to fetch stats' }) };
+        return { statusCode: 500, body: JSON.stringify({ error: error.message }) };
     }
 };
