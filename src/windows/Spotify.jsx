@@ -391,7 +391,7 @@ const StatsView = ({ stats }) => (
             </section>
 
             {/* Recently Played */}
-            <section>
+            <section className='mb-20'>
                 <SectionHeader>Recently Played</SectionHeader>
                 <div className="grid grid-cols-2 gap-4">
                     {stats?.recentlyPlayed?.slice(0, 4).map((track, i) => (
