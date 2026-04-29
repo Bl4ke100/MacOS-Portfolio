@@ -83,7 +83,7 @@ const Steam = () => {
                         <div style={s.statCard}>
                             <Trophy size={20} color="#c6d4df" style={{ marginBottom: 8 }} />
                             <div style={s.scValue}>{data.total_games} <span style={s.scUnit}>games</span></div>
-                            <div style={s.scLabel}>Library Size</div>
+                            <div style={s.scLabel}>In Library</div>
                         </div>
                         <div style={s.statCard}>
                             <History size={20} color="#90ba3c" style={{ marginBottom: 8 }} />
