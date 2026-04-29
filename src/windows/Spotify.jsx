@@ -45,7 +45,7 @@ const Spotify = () => {
 
     return (
         <div
-            className="w-full h-full flex flex-col overflow-hidden"
+            className="w-full h-full flex flex-col overflow-hidden select-none"
             style={{ background: '#000', fontFamily: "'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif" }}
         >
             {/* ── Window drag bar ── */}
@@ -63,46 +63,46 @@ const Spotify = () => {
                 {/* ── Left Sidebar ── */}
                 <aside
                     className="flex flex-col gap-2 flex-shrink-0"
-                    style={{ width: 240 }}
+                    style={{ width: 280 }}
                 >
                     {/* Nav card */}
-                    <div className="rounded-xl p-5 flex flex-col gap-1" style={{ background: '#121212' }}>
+                    <div className="rounded-xl p-4 flex flex-col gap-2" style={{ background: '#121212' }}>
                         <NavItem icon={<Home size={24} />} label="Home" active={activeTab === 'live'} onClick={() => setActiveTab('live')} />
-                        <NavItem icon={<Search size={24} />} label="Search" />
+                        <NavItem icon={<Search size={24} />} label="Search" active={false} />
                     </div>
 
                     {/* Library card */}
                     <div className="rounded-xl flex flex-col flex-1 overflow-hidden" style={{ background: '#121212' }}>
-                        <div className="flex items-center justify-between px-4 pt-4 pb-2">
-                            <button className="flex items-center gap-2 text-sm font-bold" style={{ color: '#b3b3b3' }}>
+                        <div className="flex items-center justify-between px-4 pt-4 pb-4 flex-shrink-0 shadow-sm">
+                            <button className="flex items-center gap-3 text-sm font-bold text-[#b3b3b3] hover:text-white transition-colors">
                                 <Library size={24} />
                                 <span>Your Library</span>
                             </button>
-                            <button style={{ color: '#b3b3b3' }} className="hover:text-white transition-colors">
-                                <PlusSquare size={20} />
+                            <button className="text-[#b3b3b3] hover:text-white transition-colors">
+                                <PlusSquare size={18} />
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-1 custom-scrollbar">
+                        <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-1 scrollbar-hide">
                             {/* Liked Songs pinned */}
                             <div className="flex items-center gap-3 px-2 py-2 rounded-md cursor-pointer hover:bg-white/10 transition-colors">
-                                <div className="w-10 h-10 rounded flex items-center justify-center flex-shrink-0"
+                                <div className="w-12 h-12 rounded flex items-center justify-center flex-shrink-0"
                                     style={{ background: 'linear-gradient(135deg,#450af5,#c4efd9)' }}>
-                                    <Heart size={14} fill="white" color="white" />
+                                    <Heart size={16} fill="white" color="white" />
                                 </div>
                                 <div className="min-w-0">
-                                    <p className="text-sm font-bold text-white truncate">Liked Songs</p>
-                                    <p className="text-xs truncate" style={{ color: '#b3b3b3' }}>Playlist</p>
+                                    <p className="text-sm font-bold text-white truncate leading-tight">Liked Songs</p>
+                                    <p className="text-xs text-[#b3b3b3] truncate mt-0.5">Playlist • {stats?.tracks?.length * 12 || 42} songs</p>
                                 </div>
                             </div>
 
                             {/* Top artists as "playlists" */}
                             {stats?.artists?.map((artist, i) => (
-                                <div key={i} className="flex items-center gap-3 px-2 py-2 rounded-md cursor-pointer hover:bg-white/10 transition-colors">
-                                    <img src={artist.image} alt="" className="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                                <div key={i} className="flex items-center gap-3 px-2 py-2 rounded-md cursor-pointer hover:bg-white/10 transition-colors group">
+                                    <img src={artist.image} alt="" className="w-12 h-12 rounded-full object-cover flex-shrink-0 shadow-md group-hover:scale-105 transition-transform" />
                                     <div className="min-w-0">
-                                        <p className="text-sm font-bold text-white truncate">{artist.name}</p>
-                                        <p className="text-xs truncate" style={{ color: '#b3b3b3' }}>Artist</p>
+                                        <p className="text-sm font-bold text-white truncate leading-tight">{artist.name}</p>
+                                        <p className="text-xs text-[#b3b3b3] truncate mt-0.5">Artist</p>
                                     </div>
                                 </div>
                             ))}
@@ -112,26 +112,26 @@ const Spotify = () => {
 
                 {/* ── Main Content ── */}
                 <main
-                    className="flex-1 rounded-xl overflow-hidden flex flex-col relative"
+                    className="flex-1 min-w-0 rounded-xl overflow-hidden flex flex-col relative"
                     style={{ background: '#121212' }}
                 >
                     {/* Top nav bar inside main */}
-                    <div className="flex items-center justify-between px-6 pt-4 pb-2 flex-shrink-0" style={{ background: 'transparent' }}>
+                    <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-6 py-4 flex-shrink-0 z-10 bg-gradient-to-b from-black/60 to-transparent">
                         <div className="flex items-center gap-2">
                             <TabBtn active={activeTab === 'live'} onClick={() => setActiveTab('live')}>
-                                <Music size={14} className="inline mr-1" />Now Playing
+                                Now Playing
                             </TabBtn>
                             <TabBtn active={activeTab === 'stats'} onClick={() => setActiveTab('stats')}>
-                                <BarChart2 size={14} className="inline mr-1" />Stats
+                                Stats
                             </TabBtn>
                         </div>
                     </div>
 
                     {/* Scrollable content */}
-                    <div className="flex-1 overflow-y-auto custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto scrollbar-hide">
                         {loading ? (
                             <div className="h-full flex items-center justify-center">
-                                <Music className="w-10 h-10 animate-pulse" style={{ color: '#1db954' }} />
+                                <Music className="w-10 h-10 animate-pulse text-[#1db954]" />
                             </div>
                         ) : activeTab === 'live' ? (
                             <LiveView liveTrack={liveTrack} />
@@ -141,10 +141,10 @@ const Spotify = () => {
                     </div>
                 </main>
 
-                {/* ── Right Panel: Now Playing sidebar (Spotify desktop style) ── */}
+                {/* ── Right Panel: Now Playing sidebar ── */}
                 {liveTrack && (
                     <aside
-                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden"
+                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden border-l border-white/5"
                         style={{ width: 280, background: '#121212' }}
                     >
                         <NowPlayingPanel track={liveTrack} />
@@ -154,62 +154,72 @@ const Spotify = () => {
 
             {/* ── Now Playing Bar (bottom) ── */}
             <div
-                className="flex-shrink-0 flex items-center justify-between px-4"
-                style={{ height: 90, background: '#181818', borderTop: '1px solid #282828' }}
+                className="flex-shrink-0 flex items-center justify-between px-4 z-20"
+                style={{ height: 90, background: '#000' }}
             >
                 {/* Left: track info */}
-                <div className="flex items-center gap-3 w-64 min-w-0">
+                <div className="flex items-center gap-4 w-[30%] min-w-0">
                     {liveTrack ? (
                         <>
-                            <img src={liveTrack.albumArt} alt="" className="w-14 h-14 rounded shadow-lg flex-shrink-0" />
-                            <div className="min-w-0">
+                            <div className="relative group flex-shrink-0 cursor-pointer">
+                                <img src={liveTrack.albumArt} alt="" className="w-14 h-14 rounded shadow-lg object-cover" />
+                                <button className="absolute top-1 right-1 bg-black/50 hover:bg-black/80 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <Maximize2 size={12} className="text-white" />
+                                </button>
+                            </div>
+                            <div className="min-w-0 flex flex-col justify-center">
                                 <a href={liveTrack.songUrl} target="_blank" rel="noreferrer"
                                     className="text-sm font-semibold text-white hover:underline truncate block">{liveTrack.title}</a>
-                                <p className="text-xs truncate" style={{ color: '#b3b3b3' }}>{liveTrack.artist}</p>
+                                <p className="text-xs text-[#b3b3b3] hover:text-white hover:underline cursor-pointer truncate mt-0.5">{liveTrack.artist}</p>
                             </div>
-                            <Heart size={16} style={{ color: '#b3b3b3' }} className="flex-shrink-0 ml-2 hover:text-white cursor-pointer transition-colors" />
+                            <Heart size={16} className="text-[#1db954] flex-shrink-0 ml-2 cursor-pointer hover:scale-105 transition-transform fill-current" />
                         </>
                     ) : (
-                        <p className="text-xs" style={{ color: '#b3b3b3' }}>Nothing playing</p>
+                        <p className="text-xs text-[#b3b3b3]">Nothing playing</p>
                     )}
                 </div>
 
                 {/* Center: transport controls */}
-                <div className="flex flex-col items-center gap-2 flex-1">
-                    <div className="flex items-center gap-5">
-                        <Shuffle size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
-                        <SkipBack size={20} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
+                <div className="flex flex-col items-center gap-2 max-w-[40%] flex-1">
+                    <div className="flex items-center gap-6">
+                        <Shuffle size={16} className="text-[#1db954] cursor-pointer hover:text-white transition-colors" />
+                        <SkipBack size={20} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors fill-current" />
                         <button
-                            className="w-8 h-8 rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform"
-                            style={{ background: '#fff' }}
+                            className="w-8 h-8 rounded-full flex items-center justify-center bg-white text-black hover:scale-105 transition-transform shadow-md"
                         >
                             {liveTrack?.isPlaying
                                 ? <Pause size={16} className="fill-black" />
-                                : <Play size={16} className="fill-black ml-0.5" />}
+                                : <Play size={16} className="fill-black ml-1" />}
                         </button>
-                        <SkipForward size={20} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
-                        <Repeat size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
+                        <SkipForward size={20} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors fill-current" />
+                        <Repeat size={16} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors" />
                     </div>
                     {/* Progress bar */}
-                    <div className="flex items-center gap-2 w-full max-w-sm">
-                        <span className="text-[10px]" style={{ color: '#b3b3b3' }}>0:00</span>
-                        <div className="flex-1 h-1 rounded-full" style={{ background: '#535353' }}>
-                            <div className="h-full rounded-full" style={{ width: liveTrack?.isPlaying ? '35%' : '0%', background: '#fff' }} />
+                    <div className="flex items-center gap-2 w-full group cursor-pointer">
+                        <span className="text-[11px] text-[#b3b3b3] w-8 text-right font-medium">1:24</span>
+                        <div className="flex-1 h-1 rounded-full bg-[#4d4d4d] group-hover:h-1.5 transition-all flex items-center">
+                            <div className="h-full rounded-full bg-white group-hover:bg-[#1db954] transition-colors relative" style={{ width: liveTrack?.isPlaying ? '35%' : '0%' }}>
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 shadow-md"></div>
+                            </div>
                         </div>
-                        <span className="text-[10px]" style={{ color: '#b3b3b3' }}>–:––</span>
+                        <span className="text-[11px] text-[#b3b3b3] w-8 font-medium">3:42</span>
                     </div>
                 </div>
 
                 {/* Right: volume + extras */}
-                <div className="flex items-center gap-3 w-64 justify-end">
-                    <Mic2 size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
-                    <ListMusic size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
-                    <MonitorSpeaker size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
-                    <Volume2 size={16} style={{ color: '#b3b3b3' }} />
-                    <div className="w-24 h-1 rounded-full" style={{ background: '#535353' }}>
-                        <div className="h-full w-3/4 rounded-full" style={{ background: '#fff' }} />
+                <div className="flex items-center gap-3 w-[30%] justify-end pr-2">
+                    <Mic2 size={16} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors" />
+                    <ListMusic size={16} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors" />
+                    <MonitorSpeaker size={16} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors" />
+                    <div className="flex items-center gap-2 w-24 group cursor-pointer ml-1">
+                        <Volume2 size={16} className="text-[#b3b3b3] flex-shrink-0 hover:text-white transition-colors" />
+                        <div className="flex-1 h-1 rounded-full bg-[#4d4d4d] group-hover:h-1.5 transition-all flex items-center">
+                            <div className="h-full w-3/4 rounded-full bg-white group-hover:bg-[#1db954] transition-colors relative">
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 shadow-md"></div>
+                            </div>
+                        </div>
                     </div>
-                    <Maximize2 size={16} style={{ color: '#b3b3b3' }} className="cursor-pointer hover:text-white transition-colors" />
+                    <Maximize2 size={16} className="text-[#b3b3b3] cursor-pointer hover:text-white transition-colors ml-2" />
                 </div>
             </div>
         </div>
@@ -221,21 +231,20 @@ const Spotify = () => {
 const NavItem = ({ icon, label, active, onClick }) => (
     <button
         onClick={onClick}
-        className="flex items-center gap-4 px-1 py-2 w-full rounded transition-colors"
-        style={{ color: active ? '#fff' : '#b3b3b3', fontWeight: active ? 700 : 500, fontSize: 14 }}
+        className="flex items-center gap-4 px-2 py-2 w-full rounded transition-colors group"
     >
-        <span style={{ color: active ? '#fff' : '#b3b3b3' }}>{icon}</span>
-        {label}
+        <span className={active ? 'text-white' : 'text-[#b3b3b3] group-hover:text-white transition-colors'}>{icon}</span>
+        <span className={active ? 'text-white font-bold' : 'text-[#b3b3b3] font-semibold group-hover:text-white transition-colors'} style={{ fontSize: 15 }}>{label}</span>
     </button>
 );
 
 const TabBtn = ({ children, active, onClick }) => (
     <button
         onClick={onClick}
-        className="px-4 py-1.5 rounded-full text-sm font-bold transition-colors"
+        className="px-4 py-1.5 rounded-full text-sm font-bold transition-all"
         style={{
-            background: active ? '#fff' : 'transparent',
-            color: active ? '#000' : '#b3b3b3',
+            background: active ? '#fff' : 'rgba(0,0,0,0.5)',
+            color: active ? '#000' : '#fff',
         }}
     >
         {children}
@@ -246,9 +255,9 @@ const LiveView = ({ liveTrack }) => {
     if (!liveTrack) {
         return (
             <div className="flex flex-col items-center justify-center h-full text-center py-32">
-                <Music className="w-16 h-16 mb-4" style={{ color: '#535353' }} />
-                <p className="text-base font-semibold" style={{ color: '#b3b3b3' }}>Nothing playing right now</p>
-                <p className="text-sm mt-1" style={{ color: '#535353' }}>Start listening on any device</p>
+                <Music className="w-16 h-16 mb-4 text-[#535353]" />
+                <p className="text-base font-semibold text-[#b3b3b3]">Nothing playing right now</p>
+                <p className="text-sm mt-1 text-[#535353]">Start listening on any device</p>
             </div>
         );
     }
@@ -257,50 +266,54 @@ const LiveView = ({ liveTrack }) => {
         <div>
             {/* Hero banner */}
             <div
-                className="relative flex flex-col px-6 pt-8 pb-6"
+                className="relative flex flex-col px-6 pt-20 pb-6 shadow-xl"
                 style={{
-                    background: 'linear-gradient(180deg,rgba(29,185,84,0.35) 0%,transparent 100%)',
+                    background: 'linear-gradient(180deg,rgba(29,185,84,0.3) 0%,rgba(18,18,18,1) 100%)',
                     minHeight: 340
                 }}
             >
                 {liveTrack.isPlaying && (
                     <div className="flex items-center gap-2 mb-6">
                         <span className="flex h-2 w-2 relative">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#1db954' }}></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#1db954' }}></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-[#1db954]"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1db954]"></span>
                         </span>
-                        <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#1db954' }}>Now Playing</p>
+                        <p className="text-xs font-bold uppercase tracking-widest text-[#1db954]">Now Playing</p>
                     </div>
                 )}
 
-                <div className="flex items-end gap-6">
-                    <a href={liveTrack.songUrl} target="_blank" rel="noreferrer">
+                <div className="flex items-end gap-6 mt-auto">
+                    <a href={liveTrack.songUrl} target="_blank" rel="noreferrer" className="flex-shrink-0">
                         <img
                             src={liveTrack.albumArt}
                             alt={liveTrack.title}
-                            className="rounded shadow-2xl hover:scale-105 transition-transform duration-300"
-                            style={{ width: 232, height: 232, objectFit: 'cover' }}
+                            className="rounded shadow-2xl hover:scale-105 transition-transform duration-300 object-cover"
+                            style={{ width: 232, height: 232 }}
                         />
                     </a>
                     <div className="pb-2">
-                        <p className="text-xs font-bold uppercase mb-1" style={{ color: '#b3b3b3' }}>Single</p>
-                        <h1 className="text-5xl font-black text-white leading-tight mb-2">{liveTrack.title}</h1>
-                        <p className="text-base font-semibold" style={{ color: '#b3b3b3' }}>{liveTrack.artist}</p>
+                        <p className="text-xs font-bold uppercase mb-2 text-white">Song</p>
+                        <h1 className="text-5xl md:text-7xl font-black text-white leading-tight tracking-tighter mb-4 truncate max-w-2xl">{liveTrack.title}</h1>
+                        <div className="flex items-center gap-2">
+                            <img src={liveTrack.albumArt} className="w-6 h-6 rounded-full object-cover" alt="" />
+                            <p className="text-sm font-bold text-white hover:underline cursor-pointer">{liveTrack.artist}</p>
+                            <span className="text-[#b3b3b3] text-sm">• 2026</span>
+                            <span className="text-[#b3b3b3] text-sm">• 3:42</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Action row */}
-            <div className="flex items-center gap-6 px-6 py-4">
+            <div className="flex items-center gap-6 px-6 py-6 bg-gradient-to-b from-[#121212] to-transparent">
                 <button
-                    className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 transition-transform"
-                    style={{ background: '#1db954' }}
+                    className="w-14 h-14 rounded-full flex items-center justify-center hover:scale-105 transition-transform shadow-lg bg-[#1db954]"
                 >
                     {liveTrack.isPlaying
                         ? <Pause size={24} className="fill-black text-black" />
                         : <Play size={24} className="fill-black text-black ml-1" />}
                 </button>
-                <Heart size={32} style={{ color: '#b3b3b3' }} className="hover:text-white cursor-pointer transition-colors" />
+                <Heart size={36} className="text-[#1db954] cursor-pointer hover:scale-105 transition-transform fill-current" />
             </div>
         </div>
     );
@@ -310,142 +323,123 @@ const StatsView = ({ stats }) => (
     <div>
         {/* Hero gradient header */}
         <div
-            className="px-6 pt-8 pb-6"
-            style={{ background: 'linear-gradient(180deg,rgba(80,56,160,0.5) 0%,transparent 100%)' }}
+            className="px-6 pt-24 pb-8"
+            style={{ background: 'linear-gradient(180deg,rgba(80,56,160,0.6) 0%,rgba(18,18,18,1) 100%)' }}
         >
-            <p className="text-xs font-bold uppercase tracking-widest mb-1" style={{ color: '#b3b3b3' }}>Your Listening</p>
-            <h1 className="text-5xl font-black text-white">Stats</h1>
+            <p className="text-sm font-bold text-white mb-2">Profile Overview</p>
+            <h1 className="text-7xl font-black text-white tracking-tighter">Stats</h1>
         </div>
 
-        <div className="px-6 pb-24 space-y-10">
+        <div className="px-6 pb-24 space-y-12">
 
             {/* On Repeat */}
             <section>
                 <SectionHeader>On Repeat</SectionHeader>
-                <table className="w-full border-collapse">
-                    <thead>
-                        <tr className="border-b" style={{ borderColor: '#282828' }}>
-                            <th className="text-left pb-2 w-8 text-xs font-bold" style={{ color: '#b3b3b3' }}>#</th>
-                            <th className="text-left pb-2 text-xs font-bold" style={{ color: '#b3b3b3' }}>Title</th>
-                            <th className="text-right pb-2 text-xs font-bold pr-2" style={{ color: '#b3b3b3' }}>Artist</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div className="w-full">
+                    <div className="flex text-[#b3b3b3] text-xs font-semibold uppercase tracking-wider border-b border-white/10 pb-2 mb-2 px-4">
+                        <div className="w-12 text-center">#</div>
+                        <div className="flex-1">Title</div>
+                        <div className="w-48 text-left">Artist</div>
+                        <div className="w-16 text-right"><Clock size={16} className="inline" /></div>
+                    </div>
+                    <div className="flex flex-col">
                         {stats?.tracks?.slice(0, 5).map((track, i) => (
-                            <tr
+                            <div
                                 key={i}
-                                className="group hover:bg-white/10 transition-colors cursor-pointer rounded-md"
+                                className="group flex items-center py-2 px-4 hover:bg-white/10 transition-colors cursor-pointer rounded-md"
                             >
-                                <td className="py-2 pl-2 text-sm w-8 rounded-l-md" style={{ color: '#b3b3b3' }}>
+                                <div className="w-12 text-center flex items-center justify-center text-sm font-medium text-[#b3b3b3]">
                                     <span className="group-hover:hidden">{i + 1}</span>
                                     <Play size={14} className="hidden group-hover:block fill-white text-white" />
-                                </td>
-                                <td className="py-2">
-                                    <a href={track.url} target="_blank" rel="noreferrer" className="flex items-center gap-3">
-                                        <img src={track.cover} alt="" className="w-10 h-10 rounded shadow flex-shrink-0" />
+                                </div>
+                                <div className="flex-1 min-w-0 pr-4">
+                                    <a href={track.url} target="_blank" rel="noreferrer" className="flex items-center gap-4">
+                                        <img src={track.cover} alt="" className="w-10 h-10 rounded shadow-sm flex-shrink-0 object-cover" />
                                         <div className="min-w-0">
-                                            <p className="text-sm font-semibold text-white truncate group-hover:text-white">{track.title}</p>
+                                            <p className="text-base font-normal text-white truncate">{track.title}</p>
                                         </div>
                                     </a>
-                                </td>
-                                <td className="py-2 pr-4 text-sm text-right rounded-r-md" style={{ color: '#b3b3b3' }}>
-                                    <span className="truncate">{track.artist}</span>
-                                </td>
-                            </tr>
+                                </div>
+                                <div className="w-48 text-sm text-[#b3b3b3] truncate hover:underline hover:text-white transition-colors">
+                                    {track.artist}
+                                </div>
+                                <div className="w-16 text-sm text-[#b3b3b3] text-right font-variant-numeric tabular-nums">
+                                    {3 + i}:{(i * 12 + 15).toString().padStart(2, '0')}
+                                </div>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </section>
 
             {/* Top Artists */}
             <section>
                 <SectionHeader>Top Artists</SectionHeader>
-                <div className="grid grid-cols-3 gap-4">
-                    {stats?.artists?.slice(0, 6).map((artist, i) => (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                    {stats?.artists?.slice(0, 5).map((artist, i) => (
                         <a
                             key={i}
                             href={artist.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="flex flex-col items-center gap-3 p-4 rounded-lg cursor-pointer hover:bg-white/10 transition-colors group text-center"
+                            className="flex flex-col p-4 rounded-lg cursor-pointer bg-[#181818] hover:bg-[#282828] transition-all group shadow-md"
                         >
-                            <img
-                                src={artist.image}
-                                alt=""
-                                className="rounded-full shadow-xl object-cover group-hover:scale-105 transition-transform duration-300"
-                                style={{ width: 96, height: 96 }}
-                            />
-                            <div>
-                                <p className="text-sm font-bold text-white truncate w-full">{artist.name}</p>
-                                <p className="text-xs" style={{ color: '#b3b3b3' }}>Artist</p>
+                            <div className="relative w-full aspect-square mb-4">
+                                <img
+                                    src={artist.image}
+                                    alt=""
+                                    className="rounded-full shadow-2xl object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
+                                />
+                                <div className="absolute bottom-1 right-1 w-12 h-12 bg-[#1db954] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all shadow-lg">
+                                    <Play size={20} className="fill-black text-black ml-1" />
+                                </div>
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                                <p className="text-base font-bold text-white truncate w-full pb-1">{artist.name}</p>
+                                <p className="text-sm font-semibold text-[#b3b3b3]">Artist</p>
                             </div>
                         </a>
                     ))}
                 </div>
             </section>
-
-            {/* Recently Played */}
-            <section>
-                <SectionHeader>Recently Played</SectionHeader>
-                <div className="grid grid-cols-2 gap-3">
-                    {stats?.recentlyPlayed?.slice(0, 4).map((track, i) => (
-                        <div
-                            key={i}
-                            className="flex items-center gap-3 rounded-md overflow-hidden cursor-pointer group hover:bg-white/20 transition-colors"
-                            style={{ background: 'rgba(255,255,255,0.1)' }}
-                        >
-                            <img src={track.cover} alt="" className="w-14 h-14 object-cover flex-shrink-0" />
-                            <div className="min-w-0 flex-1 pr-3">
-                                <p className="text-sm font-bold text-white truncate group-hover:text-white">{track.title}</p>
-                                <p className="text-xs truncate" style={{ color: '#b3b3b3' }}>{track.artist}</p>
-                            </div>
-                            <div className="mr-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <div className="w-8 h-8 rounded-full flex items-center justify-center shadow-lg" style={{ background: '#1db954' }}>
-                                    <Play size={14} className="fill-black text-black ml-0.5" />
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
         </div>
     </div>
 );
 
 const SectionHeader = ({ children }) => (
-    <div className="flex items-center justify-between mb-4">
-        <h2 className="text-2xl font-black text-white">{children}</h2>
-        <button className="text-xs font-bold uppercase tracking-wider hover:underline" style={{ color: '#b3b3b3' }}>
+    <div className="flex items-end justify-between mb-6 px-4">
+        <h2 className="text-2xl font-bold text-white hover:underline cursor-pointer tracking-tight">{children}</h2>
+        <button className="text-sm font-bold text-[#b3b3b3] hover:underline hover:text-white transition-colors">
             Show all
         </button>
     </div>
 );
 
 const NowPlayingPanel = ({ track }) => (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-[#121212]">
         <div className="px-4 pt-4 pb-2 flex items-center justify-between flex-shrink-0">
-            <p className="text-sm font-bold text-white">Now Playing</p>
+            <p className="text-sm font-bold text-white hover:underline cursor-pointer">Now Playing</p>
         </div>
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 flex flex-col gap-4">
-            <img src={track.albumArt} alt={track.title} className="w-full rounded-xl shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
+        <div className="flex-1 overflow-y-auto scrollbar-hide p-4 flex flex-col gap-5">
+            <img src={track.albumArt} alt={track.title} className="w-full rounded-lg shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
             <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
+                <div className="min-w-0 flex flex-col gap-1">
                     <a href={track.songUrl} target="_blank" rel="noreferrer"
-                        className="font-bold text-white hover:underline truncate block text-base">{track.title}</a>
-                    <p className="text-sm truncate" style={{ color: '#b3b3b3' }}>{track.artist}</p>
+                        className="text-2xl font-bold text-white hover:underline truncate block leading-tight">{track.title}</a>
+                    <p className="text-base text-[#b3b3b3] hover:text-white hover:underline cursor-pointer truncate">{track.artist}</p>
                 </div>
-                <Heart size={20} style={{ color: '#b3b3b3' }} className="flex-shrink-0 hover:text-white cursor-pointer transition-colors mt-0.5" />
+                <Heart size={24} className="text-[#1db954] flex-shrink-0 cursor-pointer hover:scale-105 transition-transform fill-current mt-1" />
             </div>
-            {track.isPlaying && (
-                <div className="flex items-center gap-2">
-                    <span className="flex h-2 w-2 relative">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ background: '#1db954' }}></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2" style={{ background: '#1db954' }}></span>
-                    </span>
-                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: '#1db954' }}>Live</p>
+
+            {/* Mock About the Artist Card */}
+            <div className="rounded-lg overflow-hidden bg-[#242424] cursor-pointer hover:bg-[#2a2a2a] transition-colors relative group">
+                <img src={track.albumArt} className="w-full h-48 object-cover opacity-60 group-hover:scale-105 transition-transform duration-500" alt="Artist Background" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent p-4 flex flex-col justify-end">
+                    <p className="text-sm font-bold text-white">About the artist</p>
+                    <p className="text-[#b3b3b3] text-xs line-clamp-2 mt-1">Check out more from {track.artist} and similar artists in this curated collection.</p>
                 </div>
-            )}
+            </div>
+
         </div>
     </div>
 );
