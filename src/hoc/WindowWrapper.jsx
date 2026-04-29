@@ -38,10 +38,10 @@ const WindowWrapper = (Component, windowKey) => {
                 // Calculate random position when opening
                 // Leave roughly 120px for the dock at the bottom
                 const safeHeight = window.innerHeight - 120;
-                
+
                 const maxX = Math.max(0, window.innerWidth - (el.clientWidth || 800));
                 const maxY = Math.max(0, safeHeight - (el.clientHeight || 600));
-                
+
                 randomPos.current = {
                     x: 20 + Math.random() * Math.max(0, maxX - 40),
                     y: 20 + Math.random() * Math.max(0, maxY - 40)

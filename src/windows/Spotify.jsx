@@ -113,7 +113,7 @@ const Spotify = () => {
                 {/* ── Main Content ── */}
                 <main
                     className="flex-1 rounded-xl overflow-hidden flex flex-col relative"
-                    style={{ background: '#121212' }}
+                    style={{ background: '#121212', width: '1000px' }}
                 >
                     {/* Top nav bar inside main */}
                     <div className="flex items-center justify-between px-6 pt-4 pb-2 flex-shrink-0" style={{ background: 'transparent' }}>
