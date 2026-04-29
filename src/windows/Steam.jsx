@@ -28,7 +28,7 @@ const Steam = () => {
     return (
         <div style={s.root}>
             {/* ── DRAG HEADER (FIXED) ── */}
-            <div style={s.topBar}>
+            <div id="window-header" style={s.topBar}>
                 <WindowControls target="steam" />
                 <span style={s.topBarLabel}>STEAM</span>
             </div>
