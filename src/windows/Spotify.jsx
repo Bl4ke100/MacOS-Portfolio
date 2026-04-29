@@ -5,7 +5,7 @@ import {
     Play, Pause, SkipBack, SkipForward, Music,
     BarChart2, Volume2, Shuffle, Repeat, Heart,
     Home, Search, Library, PlusSquare, Mic2,
-    ListMusic, Maximize2, MonitorSpeaker
+    ListMusic, Maximize2, MonitorSpeaker, Clock
 } from 'lucide-react';
 
 const Spotify = () => {
