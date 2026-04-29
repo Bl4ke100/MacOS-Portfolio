@@ -4,7 +4,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Draggable } from 'gsap/Draggable';
 
-// Added registration
 gsap.registerPlugin(Draggable);
 
 const WindowWrapper = (Component, windowKey) => {
@@ -29,25 +28,25 @@ const WindowWrapper = (Component, windowKey) => {
             let startY = window.innerHeight;
 
             if (triggerRect) {
-                // The dock icon center
                 startX = triggerRect.left + triggerRect.width / 2 - el.clientWidth / 2;
                 startY = triggerRect.top + triggerRect.height / 2 - el.clientHeight / 2;
             }
 
             if (isOpen) {
-                // Calculate random position when opening
-                // Leave roughly 120px for the dock at the bottom
                 const safeHeight = window.innerHeight - 120;
 
-                const maxX = Math.max(0, window.innerWidth - (el.clientWidth || 800));
-                const maxY = Math.max(0, safeHeight - (el.clientHeight || 600));
+                // Uses custom bounds for Spotify so it doesn't spawn off-screen
+                const appWidth = windowKey === 'spotify' ? 1200 : (el.clientWidth || 800);
+                const appHeight = windowKey === 'spotify' ? 750 : (el.clientHeight || 600);
+
+                const maxX = Math.max(0, window.innerWidth - appWidth);
+                const maxY = Math.max(0, safeHeight - appHeight);
 
                 randomPos.current = {
                     x: 20 + Math.random() * Math.max(0, maxX - 40),
                     y: 20 + Math.random() * Math.max(0, maxY - 40)
                 };
 
-                // The OPEN Animation
                 gsap.fromTo(el, {
                     x: startX,
                     y: startY,
@@ -63,7 +62,6 @@ const WindowWrapper = (Component, windowKey) => {
                     ease: "expo.out",
                 });
             } else if (!isOpen && shouldRender) {
-                // The CLOSE Animation
                 gsap.to(el, {
                     x: startX,
                     y: startY,
@@ -96,7 +94,11 @@ const WindowWrapper = (Component, windowKey) => {
             <section
                 id={windowKey}
                 ref={ref}
-                style={{ zIndex }}
+                // Inject exact dimensions ONLY for Spotify
+                style={{
+                    zIndex,
+                    ...(windowKey === 'spotify' ? { width: '1200px', height: '750px' } : {})
+                }}
                 className="absolute"
                 onPointerDown={() => focusWindow(windowKey)}
             >
