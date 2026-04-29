@@ -252,7 +252,7 @@ const LiveView = ({ liveTrack, stats }) => {
     if (!liveTrack) return <div className="flex flex-col items-center justify-center h-full text-center py-32"><Music className="w-14 h-14 mb-4 text-[#535353]" /><p className="text-base font-bold text-white">Nothing playing</p></div>;
 
     return (
-        <div className="pb-12">
+        <div className="pb-8">
             {/* Shrunken Hero Banner */}
             <div className="relative flex flex-col px-6 pt-10 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
@@ -276,7 +276,7 @@ const LiveView = ({ liveTrack, stats }) => {
                 </div>
             </div>
 
-            {/* Tightened Action Row */}
+            {/* Action Row */}
             <div className="flex items-center gap-4 px-6 py-2">
                 <button className="w-10 h-10 rounded-full flex items-center justify-center bg-[#1db954] hover:scale-105 transition-transform shadow-lg">
                     {liveTrack.isPlaying ? <Pause size={20} className="fill-black text-black" /> : <Play size={20} className="fill-black text-black ml-0.5" />}
@@ -284,29 +284,29 @@ const LiveView = ({ liveTrack, stats }) => {
                 <Heart size={24} className="text-[#b3b3b3] hover:text-white cursor-pointer transition-colors" />
             </div>
 
-            {/* Recommended Section */}
+            {/* NEW: Up Next Section */}
             {stats?.tracks && (
-                <div className="px-8 mt-6">
-                    <h2 className="text-xl font-bold text-white mb-4 hover:underline cursor-pointer">Recommended for you</h2>
-                    <div className="flex flex-col">
-                        {stats.tracks.slice(0, 8).map((track, i) => (
-                            <div key={i} className="group flex items-center py-2 px-3 hover:bg-white/10 transition-colors cursor-pointer rounded-md">
-                                <div className="w-10 text-center flex items-center justify-center text-sm font-normal text-[#b3b3b3]">
-                                    <span className="group-hover:hidden">{i + 1}</span>
-                                    <Play size={14} className="hidden group-hover:block fill-white text-white" />
-                                </div>
-                                <div className="flex-1 min-w-0 pr-4">
-                                    <div className="flex items-center gap-3">
-                                        <img src={track.cover} alt="" className="w-10 h-10 rounded shadow-sm flex-shrink-0 object-cover" />
-                                        <div className="min-w-0">
-                                            <p className="text-base font-medium text-white truncate">{track.title}</p>
-                                            <p className="text-sm text-[#b3b3b3] truncate">{track.artist}</p>
-                                        </div>
+                <div className="px-6 mt-4">
+                    <div className="flex items-center justify-between mb-3">
+                        <h2 className="text-base font-bold text-white hover:underline cursor-pointer">Up Next</h2>
+                        <button className="text-[10px] font-bold text-[#b3b3b3] hover:text-white transition-colors uppercase tracking-wider">View Queue</button>
+                    </div>
+                    {/* Horizontal 2-column grid */}
+                    <div className="grid grid-cols-2 gap-3">
+                        {stats.tracks.slice(0, 2).map((track, i) => (
+                            <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#181818] hover:bg-[#282828] transition-all cursor-pointer group shadow-sm border border-white/5 hover:border-white/10">
+                                <div className="relative flex-shrink-0">
+                                    <img src={track.cover} alt="" className="w-12 h-12 rounded object-cover shadow-md group-hover:opacity-40 transition-opacity" />
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <Play size={16} className="fill-white text-white ml-0.5" />
                                     </div>
                                 </div>
-                                <Heart size={16} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 hover:text-white transition-all mr-6" />
-                                <div className="text-sm text-[#b3b3b3] text-right tabular-nums">
-                                    3:42
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-[13px] font-bold text-white truncate group-hover:text-[#1db954] transition-colors">{track.title}</p>
+                                    <p className="text-[11px] text-[#b3b3b3] truncate mt-0.5">{track.artist}</p>
+                                </div>
+                                <div className="flex-shrink-0 pr-1">
+                                    <ListMusic size={16} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 transition-all hover:scale-110" />
                                 </div>
                             </div>
                         ))}
