@@ -81,9 +81,9 @@ const WindowWrapper = (Component, windowKey) => {
             if (!el) return;
 
             const dragHandle = el.querySelector('#window-header') || el;
-            const dragInstance = Draggable.create(el, { 
+            const dragInstance = Draggable.create(el, {
                 trigger: dragHandle,
-                onPress: () => focusWindow(windowKey) 
+                onPress: () => focusWindow(windowKey)
             });
 
             return () => {
@@ -101,7 +101,7 @@ const WindowWrapper = (Component, windowKey) => {
                 // Inject exact dimensions ONLY for Spotify
                 style={{
                     zIndex,
-                    ...(windowKey === 'spotify' ? { width: '1200px', height: '600px' } : {})
+                    ...(windowKey === 'spotify' ? { width: '1200px', height: '650px' } : {})
                 }}
                 className="absolute"
                 onPointerDown={() => focusWindow(windowKey)}
