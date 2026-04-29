@@ -318,7 +318,7 @@ const LiveView = ({ liveTrack, stats }) => {
 };
 
 const StatsView = ({ stats }) => (
-    <div className="pb-12">
+    <div className="pb-96">
         {/* Hero gradient header */}
         <div
             className="px-8 pt-10 pb-8"
