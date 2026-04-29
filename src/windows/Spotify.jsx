@@ -284,8 +284,7 @@ const LiveView = ({ liveTrack, stats }) => {
                 <Heart size={24} className="text-[#b3b3b3] hover:text-white cursor-pointer transition-colors" />
             </div>
 
-            {/* NEW: Up Next Section */}
-            {stats?.tracks && (
+            {liveTrack.upNext && liveTrack.upNext.length > 0 && (
                 <div className="px-6 mt-4">
                     <div className="flex items-center justify-between mb-3">
                         <h2 className="text-base font-bold text-white hover:underline cursor-pointer">Up Next</h2>
@@ -293,7 +292,8 @@ const LiveView = ({ liveTrack, stats }) => {
                     </div>
                     {/* Horizontal 2-column grid */}
                     <div className="grid grid-cols-2 gap-3">
-                        {stats.tracks.slice(0, 2).map((track, i) => (
+                        {/* Notice we are mapping liveTrack.upNext now instead of stats.tracks! */}
+                        {liveTrack.upNext.map((track, i) => (
                             <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#181818] hover:bg-[#282828] transition-all cursor-pointer group shadow-sm border border-white/5 hover:border-white/10">
                                 <div className="relative flex-shrink-0">
                                     <img src={track.cover} alt="" className="w-12 h-12 rounded object-cover shadow-md group-hover:opacity-40 transition-opacity" />
