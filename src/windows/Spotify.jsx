@@ -128,7 +128,7 @@ const Spotify = () => {
                     </div>
 
                     {/* Scrollable content */}
-                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto custom-scrollbar">
                         {loading ? (
                             <div className="h-full flex items-center justify-center">
                                 <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
@@ -256,7 +256,7 @@ const LiveView = ({ liveTrack, stats }) => {
         <div className="h-full overflow-y-auto custom-scrollbar pb-32">
 
             {/* Shrunken Hero Banner */}
-            <div className="relative flex flex-col px-6 pt-12 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
+            <div className="relative flex flex-col px-6 pt-16 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
                     {/* Image shrunk to 160px */}
                     <img
