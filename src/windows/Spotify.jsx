@@ -252,9 +252,11 @@ const LiveView = ({ liveTrack, stats }) => {
     if (!liveTrack) return <div className="flex flex-col items-center justify-center h-full text-center py-32"><Music className="w-14 h-14 mb-4 text-[#535353]" /><p className="text-base font-bold text-white">Nothing playing</p></div>;
 
     return (
-        <div className=" pb-20">
+        /* Added h-full and overflow-y-auto here so this section scrolls! */
+        <div className="h-full overflow-y-auto custom-scrollbar pb-32">
+            
             {/* Shrunken Hero Banner */}
-            <div className="relative flex flex-col px-6 pt-12 pb-5 pt-10" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
+            <div className="relative flex flex-col px-6 pt-12 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
                     {/* Image shrunk to 160px */}
                     <img
@@ -286,7 +288,7 @@ const LiveView = ({ liveTrack, stats }) => {
                 <Heart size={24} className="text-[#b3b3b3] hover:text-white cursor-pointer transition-colors" />
             </div>
 
-            {/* Recommended Section (stays same but fits better now) */}
+            {/* Recommended Section */}
             {stats?.tracks && (
                 <div className="px-8 mt-6">
                     <h2 className="text-xl font-bold text-white mb-4 hover:underline cursor-pointer">Recommended for you</h2>
