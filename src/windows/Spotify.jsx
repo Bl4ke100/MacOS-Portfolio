@@ -83,7 +83,7 @@ const Spotify = () => {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto px-2 pb-4 space-y-1 custom-scrollbar">
+                        <div className="flex-1 min-h-0 overflow-y-auto px-2 pb-4 space-y-1 custom-scrollbar">
                             {/* Liked Songs pinned */}
                             <div className="flex items-center gap-3 px-2 py-2 rounded-md cursor-pointer hover:bg-white/10 transition-colors">
                                 <div className="w-12 h-12 rounded flex items-center justify-center flex-shrink-0 shadow-md"
@@ -115,8 +115,8 @@ const Spotify = () => {
                     className="flex-1 rounded-xl overflow-hidden flex flex-col relative"
                     style={{ background: '#121212', minWidth: '600px' }}
                 >
-                    {/* Top nav bar inside main */}
-                    <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-6 pt-4 pb-2 flex-shrink-0 bg-gradient-to-b from-black/50 to-transparent">
+                    {/* FIXED: Solid Top Nav Bar (Prevents content bleeding out top) */}
+                    <div className="flex items-center justify-between px-6 py-4 flex-shrink-0 z-20 border-b border-white/5 bg-[#121212]">
                         <div className="flex items-center gap-2">
                             <TabBtn active={activeTab === 'live'} onClick={() => setActiveTab('live')}>
                                 Now Playing
@@ -127,8 +127,8 @@ const Spotify = () => {
                         </div>
                     </div>
 
-                    {/* Scrollable content */}
-                    <div className="flex-1 overflow-y-auto custom-scrollbar">
+                    {/* FIXED: Added min-h-0 here so you can actually scroll down! */}
+                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
                         {loading ? (
                             <div className="h-full flex items-center justify-center">
                                 <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
@@ -252,13 +252,10 @@ const LiveView = ({ liveTrack, stats }) => {
     if (!liveTrack) return <div className="flex flex-col items-center justify-center h-full text-center py-32"><Music className="w-14 h-14 mb-4 text-[#535353]" /><p className="text-base font-bold text-white">Nothing playing</p></div>;
 
     return (
-        /* Added h-full and overflow-y-auto here so this section scrolls! */
-        <div className="h-full overflow-y-auto custom-scrollbar pb-32">
-
+        <div className="pb-12">
             {/* Shrunken Hero Banner */}
-            <div className="relative flex flex-col px-6 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
+            <div className="relative flex flex-col px-6 pt-10 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
-                    {/* Image shrunk to 160px */}
                     <img
                         src={liveTrack.albumArt}
                         alt={liveTrack.title}
@@ -267,7 +264,6 @@ const LiveView = ({ liveTrack, stats }) => {
                     />
                     <div className="pb-1 flex-1 min-w-0">
                         <p className="text-[10px] font-bold uppercase tracking-widest text-white mb-1 opacity-80">Now Playing</p>
-                        {/* Shrunken font sizes */}
                         <h1 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tighter mb-1 truncate w-full">
                             {liveTrack.title}
                         </h1>
@@ -295,17 +291,14 @@ const LiveView = ({ liveTrack, stats }) => {
                     <div className="flex flex-col">
                         {stats.tracks.slice(0, 8).map((track, i) => (
                             <div key={i} className="group flex items-center py-2 px-3 hover:bg-white/10 transition-colors cursor-pointer rounded-md">
-                                {/* Back to original 10w size */}
                                 <div className="w-10 text-center flex items-center justify-center text-sm font-normal text-[#b3b3b3]">
                                     <span className="group-hover:hidden">{i + 1}</span>
                                     <Play size={14} className="hidden group-hover:block fill-white text-white" />
                                 </div>
                                 <div className="flex-1 min-w-0 pr-4">
                                     <div className="flex items-center gap-3">
-                                        {/* Image restored to 10x10 */}
                                         <img src={track.cover} alt="" className="w-10 h-10 rounded shadow-sm flex-shrink-0 object-cover" />
                                         <div className="min-w-0">
-                                            {/* Text restored to base and sm */}
                                             <p className="text-base font-medium text-white truncate">{track.title}</p>
                                             <p className="text-sm text-[#b3b3b3] truncate">{track.artist}</p>
                                         </div>
@@ -325,11 +318,11 @@ const LiveView = ({ liveTrack, stats }) => {
 };
 
 const StatsView = ({ stats }) => (
-    <div className="pb-99"> {/* Increased padding so play bar doesn't overlap */}
+    <div className="pb-12">
         {/* Hero gradient header */}
         <div
-            className="px-8 pt-20 pb-8"
-            style={{ background: 'linear-gradient(180deg,rgba(80,56,160,0.5) 0%,transparent 100%)' }}
+            className="px-8 pt-10 pb-8"
+            style={{ background: 'linear-gradient(180deg,rgba(80,56,160,0.5) 0%,rgba(12,12,12,0) 100%)' }}
         >
             <p className="text-xs font-bold text-white mb-2 tracking-widest uppercase">Profile Overview</p>
             <h1 className="text-6xl font-black text-white tracking-tighter">Blake's Stats</h1>
@@ -445,7 +438,8 @@ const NowPlayingPanel = ({ track, stats }) => {
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
-            <div className="flex-1 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-32">
+            {/* FIXED: min-h-0 and custom-scrollbar here too */}
+            <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-12">
                 <img src={track.albumArt} alt={track.title} className="w-full rounded-xl shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
                 <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
