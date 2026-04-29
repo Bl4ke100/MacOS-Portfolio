@@ -397,9 +397,7 @@ body {
   }
 
   #spotify,
-  #steam,
-  #youtube,
-  #tiktok {
+  #steam {
     @apply w-3xl h-[500px] absolute bg-white shadow-2xl drop-shadow-2xl rounded-xl overflow-hidden;
   }
 }

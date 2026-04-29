@@ -71,23 +71,10 @@ const dockApps = [
         name: "Spotify",
         icon: "spotify.png",
         canOpen: true,
-    },
-    {
-        id: "youtube",
-        name: "YouTube",
-        icon: "youtube.png",
-        canOpen: true,
-    },
     {
         id: "steam",
         name: "Steam",
         icon: "steam.png",
-        canOpen: true,
-    },
-    {
-        id: "tiktok",
-        name: "TikTok",
-        icon: "tiktok.png",
         canOpen: true,
     },
 ];
@@ -578,9 +565,7 @@ const WINDOW_CONFIG = {
     txtfile: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
     imgfile: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
     spotify: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-    youtube: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
     steam: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
-    tiktok: { isOpen: false, zIndex: INITIAL_Z_INDEX, data: null },
 };
 
 export { INITIAL_Z_INDEX, WINDOW_CONFIG };
