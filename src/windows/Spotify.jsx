@@ -325,7 +325,7 @@ const LiveView = ({ liveTrack, stats }) => {
 };
 
 const StatsView = ({ stats }) => (
-    <div className="pb-99"> {/* Increased padding so play bar doesn't overlap */}
+    <div className="pb-70"> {/* Increased padding so play bar doesn't overlap */}
         {/* Hero gradient header */}
         <div
             className="px-8 pt-20 pb-8"
