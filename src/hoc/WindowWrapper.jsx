@@ -97,7 +97,7 @@ const WindowWrapper = (Component, windowKey) => {
                 // Inject exact dimensions ONLY for Spotify
                 style={{
                     zIndex,
-                    ...(windowKey === 'spotify' ? { width: '1200px', height: '750px' } : {})
+                    ...(windowKey === 'spotify' ? { width: '1200px', height: '600px' } : {})
                 }}
                 className="absolute"
                 onPointerDown={() => focusWindow(windowKey)}
