@@ -76,7 +76,7 @@ const Spotify = () => {
                         <div className="flex items-center justify-between px-4 pt-4 pb-2">
                             <button className="flex items-center gap-3 text-sm font-bold hover:text-white transition-colors" style={{ color: '#b3b3b3' }}>
                                 <Library size={24} />
-                                <span>Your Library</span>
+                                <span>Blake's Library</span>
                             </button>
                             <button style={{ color: '#b3b3b3' }} className="hover:text-white transition-colors">
                                 <PlusSquare size={20} />
@@ -348,14 +348,14 @@ const LiveView = ({ liveTrack, stats }) => {
 };
 
 const StatsView = ({ stats }) => (
-    <div className="pb-32"> {/* Increased padding so play bar doesn't overlap */}
+    <div className="pb-50"> {/* Increased padding so play bar doesn't overlap */}
         {/* Hero gradient header */}
         <div
             className="px-8 pt-20 pb-8"
             style={{ background: 'linear-gradient(180deg,rgba(80,56,160,0.5) 0%,transparent 100%)' }}
         >
             <p className="text-xs font-bold text-white mb-2 tracking-widest uppercase">Profile Overview</p>
-            <h1 className="text-6xl font-black text-white tracking-tighter">Your Stats</h1>
+            <h1 className="text-6xl font-black text-white tracking-tighter">Blake's Stats</h1>
         </div>
 
         <div className="px-8 space-y-12">
