@@ -3,36 +3,40 @@ const STEAM_ID = process.env.STEAM_ID;
 
 exports.handler = async () => {
     try {
-        const [profileRes, gamesRes, recentRes] = await Promise.all([
+        const [profileRes, gamesRes, recentRes, levelRes] = await Promise.all([
             fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${STEAM_KEY}&steamids=${STEAM_ID}`),
             fetch(`http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${STEAM_KEY}&steamid=${STEAM_ID}&include_appinfo=1&format=json`),
-            fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${STEAM_KEY}&steamid=${STEAM_ID}&format=json`)
+            fetch(`http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${STEAM_KEY}&steamid=${STEAM_ID}&format=json`),
+            fetch(`http://api.steampowered.com/IPlayerService/GetSteamLevel/v1/?key=${STEAM_KEY}&steamid=${STEAM_ID}`)
         ]);
 
         const profileData = await profileRes.json();
         const gamesData = await gamesRes.json();
         const recentData = await recentRes.json();
+        const levelData = await levelRes.json();
 
         const user = profileData.response.players[0];
         const allGames = gamesData.response.games || [];
-        
-        // Milk the stats
+
         const stats = {
             personaname: user.personaname,
             avatar: user.avatarfull,
             status: user.personastate === 1 ? 'Online' : 'Offline',
             current_game: user.gameextrainfo || null,
+            level: levelData.response.player_level || 0,
             total_games: gamesData.response.game_count,
-            total_playtime: Math.round(allGames.reduce((acc, g) => acc + g.playtime_forever, 0) / 60), // Hours
-            most_played: allGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 5).map(g => ({
+            total_playtime: Math.round(allGames.reduce((acc, g) => acc + g.playtime_forever, 0) / 60),
+            most_played: allGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 4).map(g => ({
                 name: g.name,
                 playtime: Math.round(g.playtime_forever / 60),
-                icon: `https://media.steampowered.com/steamcommunity/public/images/apps/${g.appid}/${g.img_icon_url}.jpg`
+                // Grabs the horizontal store banner
+                banner: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${g.appid}/header.jpg`
             })),
-            recent: (recentData.response.games || []).map(g => ({
+            recent: (recentData.response.games || []).slice(0, 3).map(g => ({
                 name: g.name,
                 playtime_2weeks: Math.round(g.playtime_2weeks / 60),
-                image: `https://capsule-render.vercel.app/api?type=rect&color=auto&text=${encodeURIComponent(g.name)}&fontSize=20` // Fallback banner
+                // Grabs the vertical library box art
+                capsule: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${g.appid}/library_600x900.jpg`
             }))
         };
 
