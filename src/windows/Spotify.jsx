@@ -46,7 +46,7 @@ const Spotify = () => {
     return (
         <div
             className="w-full h-full flex flex-col overflow-hidden"
-            style={{ background: '#000', fontFamily: "'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif", width: '1200px', }}
+            style={{ background: '#000', fontFamily: "'Circular Std', 'Helvetica Neue', Helvetica, Arial, sans-serif", width: '1000px', }}
         >
             {/* ── Window drag bar ── */}
             <div
