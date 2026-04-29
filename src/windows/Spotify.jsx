@@ -58,7 +58,7 @@ const Spotify = () => {
             </div>
 
             {/* ── App Body (sidebar + main) ── */}
-            <div className="flex flex-1 gap-2 px-2 overflow-hidden" style={{ paddingBottom: 0 }}>
+            <div className="flex flex-1 gap-2 px-2 overflow-hidden min-h-0" style={{ paddingBottom: 0 }}>
 
                 {/* ── Left Sidebar ── */}
                 <aside
@@ -128,7 +128,7 @@ const Spotify = () => {
                     </div>
 
                     {/* FIXED: Added min-h-0 here so you can actually scroll down! */}
-                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar relative">
+                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar relative overscroll-contain">
                         {loading ? (
                             <div className="h-full flex items-center justify-center">
                                 <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
@@ -434,7 +434,7 @@ const NowPlayingPanel = ({ track, stats }) => {
     const artistImg = artistMatch ? artistMatch.image : track.albumArt;
 
     return (
-        <div className="flex flex-col h-full min-h-0 bg-[#121212]">
+        <div className="flex flex-col flex-1 w-full min-h-0 bg-[#121212]">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
