@@ -5,7 +5,7 @@ const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
-const QUEUE_ENDPOINT = `https://api.spotify.com/v1/me/player/queue`; // <-- NEW ENDPOINT
+const QUEUE_ENDPOINT = `https://api.spotify.com/v1/me/player/queue`;
 
 exports.handler = async (event, context) => {
     try {
@@ -49,14 +49,13 @@ exports.handler = async (event, context) => {
                 } catch (e) { console.error("Artist fetch failed"); }
             }
 
-            // 4. NEW: Grab the Real Queue
+            // 4. Grab the Real Queue
             try {
                 const queueResponse = await fetch(QUEUE_ENDPOINT, {
                     headers: { Authorization: `Bearer ${access_token}` },
                 });
                 if (queueResponse.ok) {
                     const queueData = await queueResponse.json();
-                    // Map the first 2 songs in the queue
                     upNextQueue = queueData.queue.slice(0, 2).map(track => ({
                         title: track.name,
                         artist: track.artists.map(a => a.name).join(', '),
@@ -77,7 +76,7 @@ exports.handler = async (event, context) => {
                     artistImage: artistData?.images?.[0]?.url || song.item.album.images[0].url,
                     followers: artistData?.followers?.total || null,
                     genres: artistData?.genres || [],
-                    upNext: upNextQueue // <-- The real queue data
+                    upNext: upNextQueue
                 }),
             };
         }
