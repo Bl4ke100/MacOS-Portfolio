@@ -284,36 +284,45 @@ const LiveView = ({ liveTrack, stats }) => {
                 <Heart size={24} className="text-[#b3b3b3] hover:text-white cursor-pointer transition-colors" />
             </div>
 
-            {/* REAL Up Next Section */}
-            {liveTrack.upNext && liveTrack.upNext.length > 0 && (
-                <div className="px-6 mt-4">
-                    <div className="flex items-center justify-between mb-3">
-                        <h2 className="text-base font-bold text-white hover:underline cursor-pointer">Up Next</h2>
-                        <button className="text-[10px] font-bold text-[#b3b3b3] hover:text-white transition-colors uppercase tracking-wider">View Queue</button>
-                    </div>
-                    {/* Horizontal 2-column grid */}
-                    <div className="grid grid-cols-2 gap-3">
-                        {/* Notice we are mapping liveTrack.upNext now instead of stats.tracks! */}
-                        {liveTrack.upNext.map((track, i) => (
-                            <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#181818] hover:bg-[#282828] transition-all cursor-pointer group shadow-sm border border-white/5 hover:border-white/10">
-                                <div className="relative flex-shrink-0">
-                                    <img src={track.cover} alt="" className="w-12 h-12 rounded object-cover shadow-md group-hover:opacity-40 transition-opacity" />
-                                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Play size={16} className="fill-white text-white ml-0.5" />
+            {/* REAL Up Next Section (With Safe Fallback) */}
+            {(() => {
+                // If we have a real queue, use it. If not, fallback to recommended tracks so it's never blank!
+                const upNextData = (liveTrack.upNext && liveTrack.upNext.length > 0)
+                    ? liveTrack.upNext
+                    : (stats?.tracks ? stats.tracks.slice(0, 2) : []);
+
+                if (upNextData.length === 0) return null;
+
+                return (
+                    <div className="px-6 mt-4">
+                        <div className="flex items-center justify-between mb-3">
+                            <h2 className="text-base font-bold text-white hover:underline cursor-pointer">
+                                {liveTrack.upNext && liveTrack.upNext.length > 0 ? "Up Next" : "Recommended for you"}
+                            </h2>
+                            <button className="text-[10px] font-bold text-[#b3b3b3] hover:text-white transition-colors uppercase tracking-wider">View Queue</button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            {upNextData.map((track, i) => (
+                                <div key={i} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#181818] hover:bg-[#282828] transition-all cursor-pointer group shadow-sm border border-white/5 hover:border-white/10">
+                                    <div className="relative flex-shrink-0">
+                                        <img src={track.cover || track.albumArt} alt="" className="w-12 h-12 rounded object-cover shadow-md group-hover:opacity-40 transition-opacity" />
+                                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <Play size={16} className="fill-white text-white ml-0.5" />
+                                        </div>
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <p className="text-[13px] font-bold text-white truncate group-hover:text-[#1db954] transition-colors">{track.title}</p>
+                                        <p className="text-[11px] text-[#b3b3b3] truncate mt-0.5">{track.artist}</p>
+                                    </div>
+                                    <div className="flex-shrink-0 pr-1">
+                                        <ListMusic size={16} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 transition-all hover:scale-110" />
                                     </div>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                    <p className="text-[13px] font-bold text-white truncate group-hover:text-[#1db954] transition-colors">{track.title}</p>
-                                    <p className="text-[11px] text-[#b3b3b3] truncate mt-0.5">{track.artist}</p>
-                                </div>
-                                <div className="flex-shrink-0 pr-1">
-                                    <ListMusic size={16} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 transition-all hover:scale-110" />
-                                </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                </div>
-            )}
+                );
+            })()}
         </div>
     );
 };
