@@ -432,7 +432,7 @@ const NowPlayingPanel = ({ track, stats }) => {
     const artistImg = artistMatch ? artistMatch.image : track.albumArt;
 
     return (
-        <div className="flex flex-col h-full bg-[#121212]">
+        <div className="flex flex-col h-full bg-[#121212] mt-10">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
