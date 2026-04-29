@@ -137,8 +137,7 @@ const Steam = () => {
                     {data.library?.length > 0 && (
                         <div style={s.section}>
                             <div style={s.secHeader}>
-                                <h2>All Games</h2>
-                                <span style={s.secSub}>Sorted by playtime</span>
+                                <h2>Most Played Games</h2>
                             </div>
                             <div style={{ ...s.gamesGrid, marginBottom: 32 }}>
                                 {data.library.map((game, i) => (
