@@ -17,6 +17,7 @@ exports.handler = async () => {
 
         const user = profileData.response.players[0];
         const allGames = gamesData.response.games || [];
+        const recentGamesList = recentData.response.games || [];
 
         // Calculate Account Age
         const currentUnix = Math.floor(Date.now() / 1000);
@@ -26,6 +27,43 @@ exports.handler = async () => {
         const totalMinutes = allGames.reduce((acc, g) => acc + g.playtime_forever, 0);
         const totalPlaytimeHours = Math.round(totalMinutes / 60);
         const avgPlaytimeHours = allGames.length > 0 ? Math.round(totalPlaytimeHours / allGames.length) : 0;
+
+        // Fetch Achievements for the Most Recently Played Game
+        let recentAchievements = [];
+        if (recentGamesList.length > 0) {
+            const topGameId = recentGamesList[0].appid;
+            const topGameName = recentGamesList[0].name;
+            try {
+                const [achRes, schemaRes] = await Promise.all([
+                    fetch(`http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=${topGameId}&key=${STEAM_KEY}&steamid=${STEAM_ID}`),
+                    fetch(`http://api.steampowered.com/ISteamUserStats/GetSchemaForGame/v2/?key=${STEAM_KEY}&appid=${topGameId}`)
+                ]);
+
+                const achData = await achRes.json();
+                const schemaData = await schemaRes.json();
+
+                if (achData.playerstats?.success && schemaData.game?.availableGameStats?.achievements) {
+                    // Filter to only unlocked achievements and sort by newest
+                    const unlocked = achData.playerstats.achievements.filter(a => a.achieved === 1);
+                    unlocked.sort((a, b) => b.unlocktime - a.unlocktime);
+
+                    const schemaAch = schemaData.game.availableGameStats.achievements;
+
+                    // Map the top 4 unlocked achievements to their schema data (names, icons, descriptions)
+                    recentAchievements = unlocked.slice(0, 4).map(u => {
+                        const details = schemaAch.find(s => s.name === u.apiname);
+                        return {
+                            name: details?.displayName || u.apiname,
+                            description: details?.hidden === 1 ? "Hidden Achievement" : details?.description || "Unlocked",
+                            icon: details?.icon,
+                            gameName: topGameName
+                        };
+                    });
+                }
+            } catch (e) {
+                console.log("Achievements skipped or game doesn't support them");
+            }
+        }
 
         const stats = {
             personaname: user.personaname,
@@ -37,18 +75,17 @@ exports.handler = async () => {
             total_games: gamesData.response.game_count,
             total_playtime: totalPlaytimeHours,
             avg_playtime: avgPlaytimeHours,
-            // Rough SteamDB style estimate: assuming average game is $15
-            estimated_value: (gamesData.response.game_count * 15).toLocaleString(),
             most_played: allGames.sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, 4).map(g => ({
                 name: g.name,
                 playtime: Math.round(g.playtime_forever / 60),
                 banner: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${g.appid}/header.jpg`
             })),
-            recent: (recentData.response.games || []).slice(0, 4).map(g => ({
+            recent: recentGamesList.slice(0, 4).map(g => ({
                 name: g.name,
                 playtime_2weeks: (g.playtime_2weeks / 60).toFixed(1),
                 capsule: `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${g.appid}/library_600x900.jpg`
-            }))
+            })),
+            achievements: recentAchievements
         };
 
         return { statusCode: 200, body: JSON.stringify(stats) };

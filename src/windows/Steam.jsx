@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WindowWrapper from '#hoc/WindowWrapper';
 import WindowControls from '#components/WindowControls';
-import { Gamepad2, Clock, Trophy, BadgeAlert, Coins, Cpu, Monitor, Zap } from 'lucide-react';
+import { Gamepad2, Clock, Trophy, BadgeAlert } from 'lucide-react';
 
 const Steam = () => {
     const [data, setData] = useState(null);
@@ -71,8 +71,8 @@ const Steam = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8 pb-4">
-                    {/* Recently Played - Vertical Posters */}
+                <div className="grid grid-cols-2 gap-8 mb-8">
+                    {/* Recently Played */}
                     <div className="flex flex-col gap-4">
                         <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] px-1 border-b border-white/10 pb-2">Active Duty</h4>
                         <div className="grid grid-cols-2 gap-3">
@@ -90,7 +90,7 @@ const Steam = () => {
                         </div>
                     </div>
 
-                    {/* Hall of Fame - Horizontal Banners */}
+                    {/* Hall of Fame */}
                     <div className="flex flex-col gap-4">
                         <h4 className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] px-1 border-b border-white/10 pb-2">Hall of Fame</h4>
                         <div className="flex flex-col gap-3">
@@ -106,6 +106,27 @@ const Steam = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* Latest Unlocks (Achievements) */}
+                {data.achievements && data.achievements.length > 0 && (
+                    <div className="w-full bg-[#1b2838]/50 p-5 rounded-xl border border-white/5">
+                        <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-4">
+                            <h4 className="text-[10px] font-bold text-[#66c0f4] uppercase tracking-[0.2em]">Latest Unlocks</h4>
+                            <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest">{data.achievements[0].gameName}</p>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            {data.achievements.map((ach, i) => (
+                                <div key={i} className="flex items-center gap-3 bg-[#171a21] p-3 rounded-lg border border-white/5">
+                                    <img src={ach.icon} className="w-10 h-10 rounded-md border border-white/10 shadow-md" alt="" />
+                                    <div className="min-w-0">
+                                        <p className="text-[11px] font-bold text-white truncate">{ach.name}</p>
+                                        <p className="text-[9px] text-gray-400 truncate">{ach.description}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
             </div>
         </div>
