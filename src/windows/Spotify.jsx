@@ -112,7 +112,7 @@ const Spotify = () => {
 
                 {/* ── Main Content ── */}
                 <main
-                    className="flex-1 rounded-xl overflow-hidden flex flex-col relative"
+                    className="flex-1 rounded-xl overflow-hidden flex flex-col relative min-h-0"
                     style={{ background: '#121212', minWidth: '600px' }}
                 >
                     {/* FIXED: Solid Top Nav Bar (Prevents content bleeding out top) */}
@@ -128,7 +128,7 @@ const Spotify = () => {
                     </div>
 
                     {/* FIXED: Added min-h-0 here so you can actually scroll down! */}
-                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar relative">
                         {loading ? (
                             <div className="h-full flex items-center justify-center">
                                 <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
@@ -144,7 +144,7 @@ const Spotify = () => {
                 {/* ── Right Panel: Now Playing sidebar ── */}
                 {liveTrack && (
                     <aside
-                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden"
+                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden min-h-0"
                         style={{ width: 320, background: '#121212' }}
                     >
                         <NowPlayingPanel track={liveTrack} stats={stats} />
@@ -434,12 +434,12 @@ const NowPlayingPanel = ({ track, stats }) => {
     const artistImg = artistMatch ? artistMatch.image : track.albumArt;
 
     return (
-        <div className="flex flex-col h-full bg-[#121212]">
+        <div className="flex flex-col h-full min-h-0 bg-[#121212]">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
             {/* FIXED: min-h-0 and custom-scrollbar here too */}
-            <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-12">
+            <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-12 overscroll-contain">
                 <img src={track.albumArt} alt={track.title} className="w-full rounded-xl shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
                 <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
