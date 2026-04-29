@@ -252,7 +252,7 @@ const LiveView = ({ liveTrack, stats }) => {
     if (!liveTrack) return <div className="flex flex-col items-center justify-center h-full text-center py-32"><Music className="w-14 h-14 mb-4 text-[#535353]" /><p className="text-base font-bold text-white">Nothing playing</p></div>;
 
     return (
-        <div className="pb-20">
+        <div className="pt-10 pb-20">
             {/* Shrunken Hero Banner */}
             <div className="relative flex flex-col px-6 pt-12 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
@@ -432,7 +432,7 @@ const NowPlayingPanel = ({ track, stats }) => {
     const artistImg = artistMatch ? artistMatch.image : track.albumArt;
 
     return (
-        <div className="flex flex-col h-full bg-[#121212] mt-10">
+        <div className="flex flex-col h-full bg-[#121212]">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
