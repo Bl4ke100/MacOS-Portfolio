@@ -58,7 +58,7 @@ const Spotify = () => {
             </div>
 
             {/* ── App Body (sidebar + main) ── */}
-            <div className="flex flex-1 gap-2 px-2 overflow-hidden min-h-0" style={{ paddingBottom: 0 }}>
+            <div className="flex flex-1 gap-2 px-2 overflow-hidden" style={{ paddingBottom: 0 }}>
 
                 {/* ── Left Sidebar ── */}
                 <aside
@@ -112,7 +112,7 @@ const Spotify = () => {
 
                 {/* ── Main Content ── */}
                 <main
-                    className="flex-1 rounded-xl overflow-hidden flex flex-col relative min-h-0"
+                    className="flex-1 rounded-xl overflow-hidden flex flex-col relative"
                     style={{ background: '#121212', minWidth: '600px' }}
                 >
                     {/* FIXED: Solid Top Nav Bar (Prevents content bleeding out top) */}
@@ -127,26 +127,24 @@ const Spotify = () => {
                         </div>
                     </div>
 
-                    {/* FIXED: Bulletproof Absolute Scroll Container */}
-                    <div className="relative flex-1 w-full min-h-0">
-                        <div className="absolute inset-0 overflow-y-auto custom-scrollbar overscroll-contain">
-                            {loading ? (
-                                <div className="h-full flex items-center justify-center">
-                                    <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
-                                </div>
-                            ) : activeTab === 'live' ? (
-                                <LiveView liveTrack={liveTrack} stats={stats} />
-                            ) : (
-                                <StatsView stats={stats} />
-                            )}
-                        </div>
+                    {/* FIXED: Added min-h-0 here so you can actually scroll down! */}
+                    <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar">
+                        {loading ? (
+                            <div className="h-full flex items-center justify-center">
+                                <Music className="w-12 h-12 animate-pulse" style={{ color: '#1db954' }} />
+                            </div>
+                        ) : activeTab === 'live' ? (
+                            <LiveView liveTrack={liveTrack} stats={stats} />
+                        ) : (
+                            <StatsView stats={stats} />
+                        )}
                     </div>
                 </main>
 
                 {/* ── Right Panel: Now Playing sidebar ── */}
                 {liveTrack && (
                     <aside
-                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden min-h-0"
+                        className="flex-shrink-0 rounded-xl flex flex-col overflow-hidden"
                         style={{ width: 320, background: '#121212' }}
                     >
                         <NowPlayingPanel track={liveTrack} stats={stats} />
@@ -436,31 +434,29 @@ const NowPlayingPanel = ({ track, stats }) => {
     const artistImg = artistMatch ? artistMatch.image : track.albumArt;
 
     return (
-        <div className="flex flex-col flex-1 w-full min-h-0 bg-[#121212]">
+        <div className="flex flex-col h-full bg-[#121212]">
             <div className="px-5 pt-5 pb-3 flex items-center justify-between flex-shrink-0">
                 <p className="text-base font-bold text-white hover:underline cursor-pointer">Now Playing</p>
             </div>
-            {/* FIXED: Bulletproof Absolute Scroll Container here too */}
-            <div className="relative flex-1 w-full min-h-0">
-                <div className="absolute inset-0 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-12 overscroll-contain">
-                    <img src={track.albumArt} alt={track.title} className="w-full rounded-xl shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
-                    <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
-                            <a href={track.songUrl} target="_blank" rel="noreferrer"
-                                className="font-bold text-white hover:underline truncate block text-2xl leading-tight pb-1">{track.title}</a>
-                            <p className="text-base truncate hover:underline cursor-pointer" style={{ color: '#b3b3b3' }}>{track.artist}</p>
-                        </div>
-                        <Heart size={24} style={{ color: '#1db954' }} className="flex-shrink-0 hover:scale-105 cursor-pointer transition-transform mt-1 fill-current" />
+            {/* FIXED: min-h-0 and custom-scrollbar here too */}
+            <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-5 flex flex-col gap-6 pb-12">
+                <img src={track.albumArt} alt={track.title} className="w-full rounded-xl shadow-2xl" style={{ aspectRatio: '1/1', objectFit: 'cover' }} />
+                <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                        <a href={track.songUrl} target="_blank" rel="noreferrer"
+                            className="font-bold text-white hover:underline truncate block text-2xl leading-tight pb-1">{track.title}</a>
+                        <p className="text-base truncate hover:underline cursor-pointer" style={{ color: '#b3b3b3' }}>{track.artist}</p>
                     </div>
+                    <Heart size={24} style={{ color: '#1db954' }} className="flex-shrink-0 hover:scale-105 cursor-pointer transition-transform mt-1 fill-current" />
+                </div>
 
-                    {/* Dynamic About the Artist Card */}
-                    <div className="rounded-xl overflow-hidden bg-[#242424] cursor-pointer hover:bg-[#2a2a2a] transition-colors relative group mt-2 flex-shrink-0 shadow-lg">
-                        <img src={artistImg} className="w-full h-56 object-cover opacity-60 group-hover:scale-105 transition-transform duration-500" alt="Artist Background" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-5 flex flex-col justify-end">
-                            <p className="text-base font-bold text-white mb-1">About the artist</p>
-                            <p className="text-sm font-bold text-white truncate mb-1">{track.artist}</p>
-                            <p className="text-xs line-clamp-2" style={{ color: '#b3b3b3' }}>1,245,678 monthly listeners. Check out more from {track.artist} in this curated collection.</p>
-                        </div>
+                {/* Dynamic About the Artist Card */}
+                <div className="rounded-xl overflow-hidden bg-[#242424] cursor-pointer hover:bg-[#2a2a2a] transition-colors relative group mt-2 flex-shrink-0 shadow-lg">
+                    <img src={artistImg} className="w-full h-56 object-cover opacity-60 group-hover:scale-105 transition-transform duration-500" alt="Artist Background" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-5 flex flex-col justify-end">
+                        <p className="text-base font-bold text-white mb-1">About the artist</p>
+                        <p className="text-sm font-bold text-white truncate mb-1">{track.artist}</p>
+                        <p className="text-xs line-clamp-2" style={{ color: '#b3b3b3' }}>1,245,678 monthly listeners. Check out more from {track.artist} in this curated collection.</p>
                     </div>
                 </div>
             </div>
