@@ -4,7 +4,7 @@ const refresh_token = process.env.SPOTIFY_REFRESH_TOKEN;
 
 const basic = Buffer.from(`${client_id}:${client_secret}`).toString('base64');
 
-// THE REAL SPOTIFY API ENDPOINTS
+// THE REAL SPOTIFY ENDPOINTS
 const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
 const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 const QUEUE_ENDPOINT = `https://api.spotify.com/v1/me/player/queue`;
@@ -41,30 +41,34 @@ exports.handler = async (event, context) => {
             let artistData = null;
             let upNextQueue = [];
 
-            // 3. Grab Artist Data (Real API Link)
+            // 3. Grab Artist Data (REAL URL)
             if (artistId) {
                 try {
                     const artistResponse = await fetch(`https://api.spotify.com/v1/artists/${artistId}`, {
                         headers: { Authorization: `Bearer ${access_token}` },
                     });
-                    if (artistResponse.ok) artistData = await artistResponse.json();
-                } catch (e) { console.error("Artist fetch failed"); }
+                    if (artistResponse.ok) {
+                        artistData = await artistResponse.json();
+                    }
+                } catch (e) { console.error("Artist fetch failed", e); }
             }
 
-            // 4. Grab the Real Queue
+            // 4. Grab the Real Queue (REAL URL)
             try {
                 const queueResponse = await fetch(QUEUE_ENDPOINT, {
                     headers: { Authorization: `Bearer ${access_token}` },
                 });
                 if (queueResponse.ok) {
                     const queueData = await queueResponse.json();
-                    upNextQueue = queueData.queue.slice(0, 2).map(track => ({
-                        title: track.name,
-                        artist: track.artists.map(a => a.name).join(', '),
-                        cover: track.album.images[0]?.url
-                    }));
+                    if (queueData && queueData.queue) {
+                        upNextQueue = queueData.queue.slice(0, 2).map(track => ({
+                            title: track.name,
+                            artist: track.artists.map(a => a.name).join(', '),
+                            cover: track.album.images[0]?.url
+                        }));
+                    }
                 }
-            } catch (e) { console.error("Queue fetch failed"); }
+            } catch (e) { console.error("Queue fetch failed", e); }
 
             // 5. Send it all back
             return {
