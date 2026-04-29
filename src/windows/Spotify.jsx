@@ -252,9 +252,9 @@ const LiveView = ({ liveTrack, stats }) => {
     if (!liveTrack) return <div className="flex flex-col items-center justify-center h-full text-center py-32"><Music className="w-14 h-14 mb-4 text-[#535353]" /><p className="text-base font-bold text-white">Nothing playing</p></div>;
 
     return (
-        <div className="pt-10 pb-20">
+        <div className=" pb-20">
             {/* Shrunken Hero Banner */}
-            <div className="relative flex flex-col px-6 pt-12 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
+            <div className="relative flex flex-col px-6 pt-12 pb-5 pt-10" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
                     {/* Image shrunk to 160px */}
                     <img
@@ -288,24 +288,31 @@ const LiveView = ({ liveTrack, stats }) => {
 
             {/* Recommended Section (stays same but fits better now) */}
             {stats?.tracks && (
-                <div className="px-6 mt-4">
-                    <h2 className="text-base font-bold text-white mb-2 hover:underline cursor-pointer">Recommended</h2>
-                    <div className="flex flex-col gap-0.5">
-                        {stats.tracks.slice(0, 5).map((track, i) => (
-                            <div key={i} className="group flex items-center py-1 px-2 hover:bg-white/10 transition-colors cursor-pointer rounded">
-                                <div className="w-8 text-center text-[11px] text-[#b3b3b3] group-hover:hidden">{i + 1}</div>
-                                <Play size={10} className="w-8 hidden group-hover:block fill-white text-white" />
+                <div className="px-8 mt-6">
+                    <h2 className="text-xl font-bold text-white mb-4 hover:underline cursor-pointer">Recommended for you</h2>
+                    <div className="flex flex-col">
+                        {stats.tracks.slice(0, 8).map((track, i) => (
+                            <div key={i} className="group flex items-center py-2 px-3 hover:bg-white/10 transition-colors cursor-pointer rounded-md">
+                                {/* Back to original 10w size */}
+                                <div className="w-10 text-center flex items-center justify-center text-sm font-normal text-[#b3b3b3]">
+                                    <span className="group-hover:hidden">{i + 1}</span>
+                                    <Play size={14} className="hidden group-hover:block fill-white text-white" />
+                                </div>
                                 <div className="flex-1 min-w-0 pr-4">
-                                    <div className="flex items-center gap-2.5">
-                                        <img src={track.cover} className="w-7 h-7 rounded object-cover" alt="" />
+                                    <div className="flex items-center gap-3">
+                                        {/* Image restored to 10x10 */}
+                                        <img src={track.cover} alt="" className="w-10 h-10 rounded shadow-sm flex-shrink-0 object-cover" />
                                         <div className="min-w-0">
-                                            <p className="text-[12px] font-medium text-white truncate">{track.title}</p>
-                                            <p className="text-[11px] text-[#b3b3b3] truncate">{track.artist}</p>
+                                            {/* Text restored to base and sm */}
+                                            <p className="text-base font-medium text-white truncate">{track.title}</p>
+                                            <p className="text-sm text-[#b3b3b3] truncate">{track.artist}</p>
                                         </div>
                                     </div>
                                 </div>
-                                <Heart size={13} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 mr-4" />
-                                <div className="text-[11px] text-[#b3b3b3] tabular-nums">3:42</div>
+                                <Heart size={16} className="text-[#b3b3b3] opacity-0 group-hover:opacity-100 hover:text-white transition-all mr-6" />
+                                <div className="text-sm text-[#b3b3b3] text-right tabular-nums">
+                                    3:42
+                                </div>
                             </div>
                         ))}
                     </div>
