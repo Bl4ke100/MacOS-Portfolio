@@ -256,7 +256,7 @@ const LiveView = ({ liveTrack, stats }) => {
         <div className="h-full overflow-y-auto custom-scrollbar pb-32">
 
             {/* Shrunken Hero Banner */}
-            <div className="relative flex flex-col px-6 mt-16 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
+            <div className="relative flex flex-col px-6 pb-5" style={{ background: 'linear-gradient(180deg,rgba(29,185,84,0.2) 0%,rgba(18,18,18,1) 100%)', minHeight: 240 }}>
                 <div className="flex items-end gap-4 w-full">
                     {/* Image shrunk to 160px */}
                     <img
