@@ -284,6 +284,7 @@ const LiveView = ({ liveTrack, stats }) => {
                 <Heart size={24} className="text-[#b3b3b3] hover:text-white cursor-pointer transition-colors" />
             </div>
 
+            {/* REAL Up Next Section */}
             {liveTrack.upNext && liveTrack.upNext.length > 0 && (
                 <div className="px-6 mt-4">
                     <div className="flex items-center justify-between mb-3">
