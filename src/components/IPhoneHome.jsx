@@ -82,7 +82,7 @@ const IPhoneHome = () => {
 
     return (
         <BootSequenceIOS>
-            <div className="w-screen h-screen relative overflow-hidden font-sans bg-black select-none flex flex-col">
+            <div className="w-[100dvw] h-[100dvh] relative overflow-hidden font-sans bg-black select-none flex flex-col">
                 <style>{`
                     @keyframes popIn {
                         from { opacity: 0; transform: scale(0.9); }

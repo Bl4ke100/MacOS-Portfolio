@@ -62,7 +62,7 @@ const BootSequenceIOS = ({ children }) => {
     return (
         <div 
             className="bg-black relative overflow-hidden font-sans select-none"
-            style={{ width: '100vw', height: '100vh' }}
+            style={{ width: '100dvw', height: '100dvh' }}
             onTouchStart={(e) => handleStart(e.touches[0].clientY)}
             onTouchMove={(e) => handleMove(e.touches[0].clientY)}
             onTouchEnd={handleEnd}
@@ -80,7 +80,7 @@ const BootSequenceIOS = ({ children }) => {
             <div 
                 className="absolute inset-0 z-50 flex flex-col justify-between"
                 style={{
-                    transform: stage === 'unlocking' ? 'translateY(-100vh)' : `translateY(${currentY}px)`,
+                    transform: stage === 'unlocking' ? 'translateY(-100dvh)' : `translateY(${currentY}px)`,
                     transition: stage === 'unlocking' ? 'transform 0.6s cubic-bezier(0.32, 0.72, 0, 1)' : (startY === null ? 'transform 0.3s ease' : 'none'),
                 }}
             >
