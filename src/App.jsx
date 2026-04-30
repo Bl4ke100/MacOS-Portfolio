@@ -15,29 +15,35 @@ import Photos from "#windows/Photos";
 import Spotify from "#windows/Spotify";
 
 import Steam from "#windows/Steam";
+import BootSequence from "#windows/BootSequence";
 
 gsap.registerPlugin(Draggable)
 
 const App = () => {
   return (
     <main>
-      <NavBar />
-      <Welcome />
-      <Dock />
 
-      <Terminal />
-      <Safari />
-      <Contact />
-      <Resume />
-      <Finder />
-      <Text />
-      <Img />
-      <Home />
-      <Spotify />
+      <BootSequence>
 
-      <Steam />
+        <NavBar />
+        <Welcome />
+        <Dock />
 
-      <Photos />
+        <Terminal />
+        <Safari />
+        <Contact />
+        <Resume />
+        <Finder />
+        <Text />
+        <Img />
+        <Home />
+        <Spotify />
+
+        <Steam />
+
+        <Photos />
+
+      </BootSequence>
     </main>
   )
 }
