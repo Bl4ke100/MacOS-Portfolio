@@ -147,7 +147,7 @@ const socials = [
         id: 1,
         text: "Github",
         icon: "/icons/github.svg",
-        bg: "#f4656b",
+        bg: "#111111",
         link: "https://github.com/Bl4ke100",
     },
     {
@@ -163,6 +163,20 @@ const socials = [
         icon: "/icons/linkedin.svg",
         bg: "#05b6f6",
         link: "https://www.linkedin.com/in/janindu-magamage-b630613ba/",
+    },
+    {
+        id: 3,
+        text: "Youtube",
+        icon: "/icons/youtube.png",
+        bg: "#ff0000",
+        link: "https://youtube.com/@blakexo?si=7QclG2dTrWV3oayN",
+    },
+    {
+        id: 5,
+        text: "Tiktok",
+        icon: "/icons/tiktok.png",
+        bg: "#f4656b",
+        link: "https://www.tiktok.com/@3l4ke",
     },
 ];
 
